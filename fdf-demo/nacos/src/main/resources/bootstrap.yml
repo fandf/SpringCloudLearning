@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: nacos-service
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml
+      discovery:
+        server-addr: localhost:8848
+        service: nacos-service
