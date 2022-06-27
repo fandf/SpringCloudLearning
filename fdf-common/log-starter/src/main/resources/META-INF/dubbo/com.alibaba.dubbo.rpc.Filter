@@ -1,0 +1,1 @@
+logTrace=com.fandf.log.trace.DubboTraceFilter

@@ -8,13 +8,18 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>nacos</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>nacos</name>
     <description>nacos</description>
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>com.fandf</groupId>
+            <artifactId>common-core</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.fandf</groupId>-->
+<!--            <artifactId>log-starter</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -40,5 +45,6 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
     </dependencies>
+
 
 </project>

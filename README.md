@@ -14,8 +14,9 @@ maven仓库配置: https://blog.51cto.com/u_14301180/5354391
 
 Nacos 1.4.2
 RocketMQ 4.9.2
-Sentinel 1.8.3
+Sentinel 1.8.3  
+seata   
 
 ### 1. nacos测试
-fdf-demo/nacos/README.md
+https://github.com/fandf/SpringCloudLearning/tree/master/fdf-demo/nacos/README.md
 

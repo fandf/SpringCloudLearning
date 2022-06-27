@@ -1,0 +1,5 @@
+org.springframework.context.ApplicationContextInitializer=\
+com.fandf.log.config.TtlMDCAdapterInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.fandf.log.LogAutoConfigure

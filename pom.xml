@@ -20,6 +20,13 @@
         <druid.version>1.2.11</druid.version>
         <lombok.version>1.18.24</lombok.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
+        <transmittable.version>2.13.0</transmittable.version>
+        <slf4j-api.version>1.7.34</slf4j-api.version>
+        <dubbo.version>3.0.9</dubbo.version>
+        <jackson-databind.version>2.13.3</jackson-databind.version>
+        <banner.version>1.0.2</banner.version>
+        <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
+        <easypoi.version>4.4.0</easypoi.version>
     </properties>
 
     <dependencies>
@@ -32,6 +39,17 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- 自定义start  -->
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>log-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>common-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!--Spring Cloud Alibaba 版本管理器-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -68,6 +86,16 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
             <!-- lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -80,6 +108,38 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!-- transmittable-thread-local主要是用于线程池等线程复用时，需要确保子线程的InheritableThreadLocal变量永远跟该线程创建时的父线程的InheritableThreadLocal一致的场景下，弥补InheritableThreadLocal的不足 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-databind.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nepxion</groupId>
+                <artifactId>banner</artifactId>
+                <version>${banner.version}</version>
+            </dependency>
+            <!--   easypoi   -->
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-base</artifactId>
+                <version>${easypoi.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -105,6 +165,7 @@
     <modules>
         <!-- demo -->
         <module>fdf-demo</module>
+        <module>fdf-common</module>
     </modules>
 
 </project>

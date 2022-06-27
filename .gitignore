@@ -27,3 +27,9 @@ hs_err_pid*
 /fdf-demo/nacos/.mvn/
 /.idea/
 /fdf-demo/seata-demo/seata-demo.iml
+/fdf-demo/seata-demo/account-service/account-service.iml
+/fdf-common/fdf-common.iml
+/fdf-common/fdf-common-core/fdf-common-core.iml
+/fdf-common/log-starter/log-starter.iml
+/fdf-common/common-core/common-core.iml
+/fdf-common/db-starter/db-starter.iml
