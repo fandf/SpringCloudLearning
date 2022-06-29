@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * 日志埋点工具
- * @author fandf
+ * @author fandongfeng
  * @date 2022/6/26 13:05
  */
 @Slf4j

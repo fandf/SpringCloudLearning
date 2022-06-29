@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * 多租户自动配置
  * @EnableConfigurationProperties 配置文件转化为bean
- * @author fandf
+ * @author fandongfeng
  * @date 2022/6/27 13:28
  */
 @EnableConfigurationProperties(TenantProperties.class)

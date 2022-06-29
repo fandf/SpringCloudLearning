@@ -7,7 +7,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
  * 日志链路追踪配置
- * @author fandf
+ * @author fandongfeng
  * @date 2022/6/26 20:53
  */
 @Setter

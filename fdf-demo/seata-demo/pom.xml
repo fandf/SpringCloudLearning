@@ -12,9 +12,31 @@
     <description>seata分布式事务demo</description>
     <packaging>pom</packaging>
 
+    <dependencies>
+        <!-- seata-->
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-spring-boot-starter</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.seata</groupId>
+                    <artifactId>seata-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
 
     <modules>
-        <module>account-service</module>
+        <module>business-service</module>
+        <module>order-service</module>
+        <module>storage-service</module>
+        <module>user-service</module>
     </modules>
 
 </project>

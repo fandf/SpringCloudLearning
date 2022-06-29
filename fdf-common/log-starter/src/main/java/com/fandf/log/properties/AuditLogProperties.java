@@ -7,7 +7,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
  * 审计日志配置
- * @author fandf
+ * @author fandongfeng
  * @date 2022/6/26 10:39
  */
 @Setter

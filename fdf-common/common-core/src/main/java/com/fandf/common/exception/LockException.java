@@ -1,7 +1,7 @@
 package com.fandf.common.exception;
 
 /**
- * @author fandf
+ * @author fandongfeng
  * @date 2022/6/27 11:56
  * 分布式锁异常
  */

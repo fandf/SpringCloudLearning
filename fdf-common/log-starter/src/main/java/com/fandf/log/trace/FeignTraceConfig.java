@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 
 /**
  * feign拦截器，传递traceId
- * @author fandf
+ * @author fandongfeng
  * @date 2022/6/26 20:52
  */
 @Configuration

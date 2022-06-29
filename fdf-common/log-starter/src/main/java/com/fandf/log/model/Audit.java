@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 /**
  * 审计日志对象
- * @author fandf
+ * @author fandongfeng
  * @date 2022/6/26 10:47
  */
 @Data

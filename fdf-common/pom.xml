@@ -15,6 +15,7 @@
         <module>common-core</module>
         <module>log-starter</module>
         <module>db-starter</module>
+        <module>loadbalancer-starter</module>
     </modules>
 
 

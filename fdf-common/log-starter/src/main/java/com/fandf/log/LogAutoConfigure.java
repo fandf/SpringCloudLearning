@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author fandf
+ * @author fandongfeng
  * @date 2022/6/26 21:03
  */
 @ComponentScan

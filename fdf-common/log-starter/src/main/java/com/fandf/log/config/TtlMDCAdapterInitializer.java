@@ -6,7 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * 初始化TtlMDCAdapter实例，并替换MDC中的adapter对象
- * @author fandf
+ * @author fandongfeng
  * @date 2022/6/26 12:32
  */
 

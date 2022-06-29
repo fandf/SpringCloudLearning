@@ -33,3 +33,9 @@ hs_err_pid*
 /fdf-common/log-starter/log-starter.iml
 /fdf-common/common-core/common-core.iml
 /fdf-common/db-starter/db-starter.iml
+/fdf-config/fdf-config.iml
+/fdf-demo/seata-demo/bussiness-service/business-service.iml
+/fdf-demo/seata-demo/business-service/business-service.iml
+/fdf-common/loadbalancer-starter/loadbalancer-starter.iml
+/fdf-demo/seata-demo/order-service/order-service.iml
+/fdf-demo/seata-demo/storage-service/storage-service.iml

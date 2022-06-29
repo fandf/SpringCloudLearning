@@ -3,7 +3,7 @@ package com.fandf.common.lock;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author fandf
+ * @author fandongfeng
  * 分布式锁
  */
 public interface DistributedLock {

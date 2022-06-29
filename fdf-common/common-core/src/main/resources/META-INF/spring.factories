@@ -1,2 +1,7 @@
 org.springframework.context.ApplicationContextInitializer=\
 com.fandf.common.config.BannerInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.fandf.common.lock.LockAspect,\
+com.fandf.common.utils.SpringUtil,\
+ com.fandf.common.filter.TenantFilter

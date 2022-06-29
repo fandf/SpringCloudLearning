@@ -4,7 +4,7 @@ import com.fandf.log.model.Audit;
 
 /**
  * 审计对象接口
- * @author fandf
+ * @author fandongfeng
  */
 public interface IAuditService {
     /**

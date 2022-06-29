@@ -6,6 +6,7 @@ docker pull nacos/nacos-server:1.4.2
 
 docker run -e JVM_XMS=256m -e JVM_XMX=256m -e MODE=standalone --name nacos -d -p 8848:8848 nacos/nacos-server:1.4.2
 
+
 登录nacos 创建配置列表   
 nacos-service.yaml 
 > server:  

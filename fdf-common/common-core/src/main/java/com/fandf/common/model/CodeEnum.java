@@ -2,7 +2,7 @@ package com.fandf.common.model;
 
 /**
  * 统一结果返回码
- * @author fandf
+ * @author fandongfeng
  */
 public enum CodeEnum {
 

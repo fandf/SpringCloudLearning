@@ -13,9 +13,9 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
-        <spring.cloud.alibaba.version>2021.0.1.0</spring.cloud.alibaba.version>
-        <spring.boot.version>2.7.1</spring.boot.version>
-        <spring.cloud.version>2021.0.1</spring.cloud.version>
+        <spring-cloud-alibaba-dependencies.version>2021.0.1.0</spring-cloud-alibaba-dependencies.version>
+        <spring-boot-dependencies.version>2.6.3</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>2021.0.1</spring-cloud-dependencies.version>
         <hutool.version>5.8.3</hutool.version>
         <druid.version>1.2.11</druid.version>
         <lombok.version>1.18.24</lombok.version>
@@ -27,6 +27,7 @@
         <banner.version>1.0.2</banner.version>
         <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
         <easypoi.version>4.4.0</easypoi.version>
+        <mysql-connector-java.version>6.0.6</mysql-connector-java.version>
     </properties>
 
     <dependencies>
@@ -50,11 +51,26 @@
                 <artifactId>common-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>db-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>fdf-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>loadbalancer-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!--Spring Cloud Alibaba 版本管理器-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring.cloud.alibaba.version}</version>
+                <version>${spring-cloud-alibaba-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -62,7 +78,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
+                <version>${spring-boot-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -70,7 +86,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
+                <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -141,6 +157,12 @@
                 <artifactId>easypoi-base</artifactId>
                 <version>${easypoi.version}</version>
             </dependency>
+            <!-- mysql -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -166,6 +188,7 @@
         <!-- demo -->
         <module>fdf-demo</module>
         <module>fdf-common</module>
+        <module>fdf-config</module>
     </modules>
 
 </project>
