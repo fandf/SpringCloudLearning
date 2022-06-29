@@ -13,6 +13,7 @@
     <modules>
         <module>nacos</module>
         <module>seata-demo</module>
+        <module>sharding-jdbc-demo</module>
     </modules>
 
 </project>

@@ -39,3 +39,4 @@ hs_err_pid*
 /fdf-common/loadbalancer-starter/loadbalancer-starter.iml
 /fdf-demo/seata-demo/order-service/order-service.iml
 /fdf-demo/seata-demo/storage-service/storage-service.iml
+/fdf-demo/sharding-jdbc-demo/sharding-jdbc-demo.iml

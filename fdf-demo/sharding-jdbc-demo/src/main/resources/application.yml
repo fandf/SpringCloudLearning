@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: sharding-jdbc-demo
+  profiles:
+    active: sharding-tables
+  main:
+    allow-bean-definition-overriding: true
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: com.fandf.sharding.model
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+
+fdf:
+  datasource:
+    url: localhost
+    username: root
+    password: 123456

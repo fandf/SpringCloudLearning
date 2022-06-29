@@ -27,7 +27,9 @@
         <banner.version>1.0.2</banner.version>
         <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
         <easypoi.version>4.4.0</easypoi.version>
-        <mysql-connector-java.version>6.0.6</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.19</mysql-connector-java.version>
+        <!-- 高版本启动报错 Property 'sqlSessionFactory' or 'sqlSessionTemplate' are required -->
+        <sharding-sphere.version>4.0.0-RC1</sharding-sphere.version>
     </properties>
 
     <dependencies>
@@ -162,6 +164,12 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java.version}</version>
+            </dependency>
+            <!-- sharding jdbc -->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${sharding-sphere.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
