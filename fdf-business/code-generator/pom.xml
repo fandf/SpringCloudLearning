@@ -15,6 +15,7 @@
             <groupId>com.fandf</groupId>
             <artifactId>fdf-config</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.fandf</groupId>
             <artifactId>common-core</artifactId>

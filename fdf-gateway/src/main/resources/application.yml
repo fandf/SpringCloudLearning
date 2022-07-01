@@ -12,6 +12,44 @@ spring:
     resources:
       add-mappings: false
   cloud:
+    sentinel:
+      datasource:
+        #流量控制规则
+        flow:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-flow-rules
+            groupId: SENTINEL_GROUP
+            rule-type: flow
+        #熔断降级规则
+        degrade:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-degrade-rules
+            groupId: SENTINEL_GROUP
+            rule-type: degrade
+        system:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-system-rules
+            groupId: SENTINEL_GROUP
+            rule-type: system
+        #黑白名单控制
+        authority:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-authority-rules
+            groupId: SENTINEL_GROUP
+            rule-type: authority
+        param-flow:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-param-flow-rules
+            groupId: SENTINEL_GROUP
+            rule-type: param-flow
+      eager: true
+      transport:
+        dashboard: localhost:8858
     gateway:
       discovery:
         locator:
@@ -42,14 +80,6 @@ fdf:
     ignore:
       # 忽略认证的地址
       httpUrls: >
-        /api-uaa/oauth/**,
-        /api-uaa/validata/**,
-        /api-uaa/css/**,
-        /api-uaa/images/**,
-        /api-uaa/js/**,
-        /login.html,
-        /user/login,
-        /api-uaa/tokens/key,
         /api-code/**
     auth:
       urlPermission:
@@ -62,16 +92,14 @@ fdf:
           /api-log/requestStat
         #白名单
         includeClientIds:
-          - webApp
+#          - webApp
       renew:
         #是否开启token自动续签（目前只有redis实现）
         enable: true
         #白名单
         includeClientIds:
-          - webApp
+#          - webApp
   gateway:
     #网关动态路由
     dynamicRoute:
       enabled: true
-logging:
-  level: debug
