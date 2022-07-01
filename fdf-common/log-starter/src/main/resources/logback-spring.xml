@@ -103,7 +103,7 @@
         <appender-ref ref="audit_log_async" />
     </logger>
 
-    <root level="INFO">
+    <root level="debug">
         <appender-ref ref="StdoutAppender"/>
         <appender-ref ref="file_async"/>
     </root>

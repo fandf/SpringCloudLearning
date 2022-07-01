@@ -1,0 +1,77 @@
+server:
+  port: 9900
+spring:
+  resources:
+    #不加启动后 doc.html 404
+    add-mappings: true
+  application:
+    name: fdf-gateway
+  main:
+    allow-bean-definition-overriding: true
+  web:
+    resources:
+      add-mappings: false
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          #路由的路径默认会使用大写ID，若想要使用小写ID，可将lowerCaseServiceId设置为true
+          lower-case-service-id: true
+          #网关自动根据注册中心的服务名为每个服务创建一个router
+          enabled: true
+#          #不设置前缀默认ReactiveCompositeDiscoveryClient
+#          route-id-prefix: "fdf"
+      routes:
+        - id: code-generator
+          uri: lb://code-generator
+          predicates:
+            - Path=/api-code/**
+          filters:
+            - StripPrefix=1
+            - PreserveHostHeader
+fdf:
+  trace:
+    enable: true
+  swagger-agg:
+    generate-routes: code-generator
+  oauth2:
+    token:
+      store:
+        type: redis
+  security:
+    ignore:
+      # 忽略认证的地址
+      httpUrls: >
+        /api-uaa/oauth/**,
+        /api-uaa/validata/**,
+        /api-uaa/css/**,
+        /api-uaa/images/**,
+        /api-uaa/js/**,
+        /login.html,
+        /user/login,
+        /api-uaa/tokens/key,
+        /api-code/**
+    auth:
+      urlPermission:
+        #是否开启url级别权限
+        enable: false
+        #配置只进行登录认证，不进行url权限认证的api
+        ignoreUrls: >
+          /api-user/menus/current,
+          /api-user/users/current,
+          /api-log/requestStat
+        #白名单
+        includeClientIds:
+          - webApp
+      renew:
+        #是否开启token自动续签（目前只有redis实现）
+        enable: true
+        #白名单
+        includeClientIds:
+          - webApp
+  gateway:
+    #网关动态路由
+    dynamicRoute:
+      enabled: true
+logging:
+  level: debug

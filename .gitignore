@@ -40,3 +40,11 @@ hs_err_pid*
 /fdf-demo/seata-demo/order-service/order-service.iml
 /fdf-demo/seata-demo/storage-service/storage-service.iml
 /fdf-demo/sharding-jdbc-demo/sharding-jdbc-demo.iml
+/fdf-common/swagger-starter/swagger-starter.iml
+/fdf-demo/swagger-demo/swagger-demo.iml
+/fdf-common/sentinel-starter/sentinel-starter.iml
+/fdf-common/redis-starter/redis-starter.iml
+/fdf-gateway/fdf-gateway.iml
+/fdf-demo/seata-demo/user-service/user-service.iml
+/fdf-business/fdf-business.iml
+/fdf-business/code-generator/code-generator.iml

@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.fandf.oauth2.common.AuthClientAutoConfiguration

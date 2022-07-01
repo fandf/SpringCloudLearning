@@ -13,9 +13,9 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
-        <spring-cloud-alibaba-dependencies.version>2021.0.1.0</spring-cloud-alibaba-dependencies.version>
-        <spring-boot-dependencies.version>2.6.3</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>2021.0.1</spring-cloud-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
+        <spring-boot-dependencies.version>2.5.8</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>2020.0.3</spring-cloud-dependencies.version>
         <hutool.version>5.8.3</hutool.version>
         <druid.version>1.2.11</druid.version>
         <lombok.version>1.18.24</lombok.version>
@@ -23,13 +23,24 @@
         <transmittable.version>2.13.0</transmittable.version>
         <slf4j-api.version>1.7.34</slf4j-api.version>
         <dubbo.version>3.0.9</dubbo.version>
-        <jackson-databind.version>2.13.3</jackson-databind.version>
+        <jackson-databind.version>2.12.4</jackson-databind.version>
         <banner.version>1.0.2</banner.version>
         <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
         <easypoi.version>4.4.0</easypoi.version>
         <mysql-connector-java.version>8.0.19</mysql-connector-java.version>
         <!-- 高版本启动报错 Property 'sqlSessionFactory' or 'sqlSessionTemplate' are required -->
         <sharding-sphere.version>4.0.0-RC1</sharding-sphere.version>
+        <knife4j.version>2.0.4</knife4j.version>
+        <redisson-starter.version>3.17.4</redisson-starter.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <spring-cloud-starter-oauth2.version>2.2.5.RELEASE</spring-cloud-starter-oauth2.version>
+        <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
+        <UserAgentUtils.version>1.21</UserAgentUtils.version>
+        <spring-security-oauth2.version>2.3.8.RELEASE</spring-security-oauth2.version>
+        <velocity.version>1.7</velocity.version>
+        <commons-configuration2.version>2.7</commons-configuration2.version>
+        <commons-configuration.version>1.10</commons-configuration.version>
+        <servlet-api.version>4.0.1</servlet-api.version>
     </properties>
 
     <dependencies>
@@ -66,6 +77,26 @@
             <dependency>
                 <groupId>com.fandf</groupId>
                 <artifactId>loadbalancer-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>swagger-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>sentinel-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>redis-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>auth-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--Spring Cloud Alibaba 版本管理器-->
@@ -171,6 +202,68 @@
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
                 <version>${sharding-sphere.version}</version>
             </dependency>
+            <!-- swagger -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-micro-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!-- 在Redis基础上的一个Java实用工具包 -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-oauth2</artifactId>
+                <version>${spring-cloud-starter-oauth2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-security</artifactId>
+                <version>${spring-social-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${UserAgentUtils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${spring-security-oauth2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-configuration2</artifactId>
+                <version>${commons-configuration2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-configuration</groupId>
+                <artifactId>commons-configuration</artifactId>
+                <version>${commons-configuration.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -197,6 +290,8 @@
         <module>fdf-demo</module>
         <module>fdf-common</module>
         <module>fdf-config</module>
+        <module>fdf-gateway</module>
+        <module>fdf-business</module>
     </modules>
 
 </project>

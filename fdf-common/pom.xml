@@ -16,6 +16,10 @@
         <module>log-starter</module>
         <module>db-starter</module>
         <module>loadbalancer-starter</module>
+        <module>swagger-starter</module>
+        <module>sentinel-starter</module>
+        <module>redis-starter</module>
+        <module>auth-starter</module>
     </modules>
 
 
