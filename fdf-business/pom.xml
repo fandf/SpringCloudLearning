@@ -13,6 +13,7 @@
     <description>业务组件</description>
     <modules>
         <module>code-generator</module>
+        <module>search-service</module>
     </modules>
 
     <dependencies>

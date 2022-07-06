@@ -48,3 +48,10 @@ hs_err_pid*
 /fdf-demo/seata-demo/user-service/user-service.iml
 /fdf-business/fdf-business.iml
 /fdf-business/code-generator/code-generator.iml
+/fdf-business/search-service/search-service.iml
+/fdf-job/fdf-job.iml
+/fdf-job/job-core/job-core.iml
+/fdf-job/job-admin/job-admin.iml
+/fdf-job/job-executor-samples/job-executor-samples.iml
+/fdf-monitor/admin/admin.iml
+/fdf-monitor/fdf-monitor.iml

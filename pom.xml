@@ -41,6 +41,9 @@
         <commons-configuration2.version>2.7</commons-configuration2.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <servlet-api.version>4.0.1</servlet-api.version>
+        <spring-data-elasticsearch.version>4.2.3</spring-data-elasticsearch.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <spring-boot-admin.version>2.5.6</spring-boot-admin.version>
     </properties>
 
     <dependencies>
@@ -48,7 +51,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -264,6 +271,17 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet-api.version}</version>
             </dependency>
+            <!-- es -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>${spring-data-elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -292,6 +310,8 @@
         <module>fdf-config</module>
         <module>fdf-gateway</module>
         <module>fdf-business</module>
+        <module>fdf-job</module>
+        <module>fdf-monitor</module>
     </modules>
 
 </project>
