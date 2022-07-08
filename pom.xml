@@ -19,7 +19,7 @@
         <hutool.version>5.8.3</hutool.version>
         <druid.version>1.2.11</druid.version>
         <lombok.version>1.18.24</lombok.version>
-        <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
+        <docker-maven-plugin.version>0.40.1</docker-maven-plugin.version>
         <transmittable.version>2.13.0</transmittable.version>
         <slf4j-api.version>1.7.34</slf4j-api.version>
         <dubbo.version>3.0.9</dubbo.version>
@@ -294,7 +294,7 @@
                     <version>${spring-boot-dependencies.version}</version>
                 </plugin>
                 <plugin>
-                    <groupId>com.spotify</groupId>
+                    <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>${docker-maven-plugin.version}</version>
                 </plugin>
