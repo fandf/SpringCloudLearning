@@ -20,7 +20,7 @@ public class BannerInitializer implements ApplicationContextInitializer<Configur
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
         if (!(applicationContext instanceof AnnotationConfigApplicationContext)) {
-            LogoBanner logoBanner = new LogoBanner(BannerInitializer.class, "/fdfmp/logo.txt", "Welcome to fdf", 5, 6, new Color[5], true);
+            LogoBanner logoBanner = new LogoBanner(BannerInitializer.class, "/fdfmp/banner.txt", "Welcome to fdf", 5, 6, new Color[5], true);
             CustomBanner.show(logoBanner, new Description(BannerConstant.VERSION + ":", CommonConstant.PROJECT_VERSION, 0, 1)
                     , new Description("Github:", "https://github.com/fandf", 0, 1)
             );

@@ -8,8 +8,8 @@ spring:
       username: nacos
       password: nacos
       config:
-        server-addr: localhost:8848
+        server-addr: host.docker.internal:8848
         file-extension: yaml
       discovery:
-        server-addr: localhost:8848
+        server-addr: host.docker.internal:8848
         service: nacos-service
