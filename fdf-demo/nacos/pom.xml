@@ -65,6 +65,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <!-- 指定启动类 -->
                     <mainClass>com.fandf.nacos.NacosApplication</mainClass>
                 </configuration>
             </plugin>
