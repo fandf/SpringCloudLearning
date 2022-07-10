@@ -5,10 +5,13 @@ docker run --name seata -p 8091:8091 -d  seataio/seata-server:1.5.1
 
 docker cp seata:/seata-server /Users/dongfengfan/docker/seata
 
+docker cp Desktop/mysql-connector-java-8.0.27.jar seata:/seata-server/libs
 
-docker run -d  --name  seata -p 8091:8091 -p 7091:7091 -v /Users/dongfengfan/docker/seata/seata-server:/seata-server -e SEATA_PORT=8091 seataio/seata-server:1.5.1
+docker run -d  --name  seata -p 8091:8091 -p 7091:7091 \
+-v /Users/dongfengfan/docker/seata/seata-server:/seata-server \
+-e SEATA_PORT=8091 -e SEATA_IP=192.168.2.3 seataio/seata-server:1.5.1
 
-修改本地 resources/application.yml
+修改本地 /Users/dongfengfan/docker/seata/seata-server/resources/application.yml
 
 ````yaml
 server:
@@ -22,12 +25,12 @@ logging:
   config: classpath:logback-spring.xml
   file:
     path: ${user.home}/logs/seata
-  extend:
-    logstash-appender:
-      destination: 127.0.0.1:4560
-    kafka-appender:
-      bootstrap-servers: 127.0.0.1:9092
-      topic: logback_to_logstash
+#  extend:
+#    logstash-appender:
+#      destination: 127.0.0.1:4560
+#    kafka-appender:
+#      bootstrap-servers: 127.0.0.1:9092
+#      topic: logback_to_logstash
 
 console:
   user:
@@ -51,7 +54,7 @@ seata:
   registry:
     # support: nacos, eureka, redis, zk, consul, etcd3, sofa
     type: nacos
-    preferred-networks: 30.240.*
+#    preferred-networks: 30.240.*
     nacos:
       application: seata-server
       server-addr: host.docker.internal:8848
@@ -80,7 +83,7 @@ store.db.dbType=mysql
 # 需要根据mysql的版本调整driverClassName
 # mysql8及以上版本对应的driver：com.mysql.cj.jdbc.Driver
 # mysql8以下版本的driver：com.mysql.jdbc.Driver
-store.db.driverClassName=com.mysql.jdbc.Driver
+store.db.driverClassName=com.mysql.cj.jdbc.Driver
 # 注意根据生产实际情况调整参数host和port
 store.db.url=jdbc:mysql://host.docker.internal:3306/seata?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
 # 数据库用户名

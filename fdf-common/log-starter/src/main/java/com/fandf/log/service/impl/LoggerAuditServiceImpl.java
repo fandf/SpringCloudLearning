@@ -25,7 +25,7 @@ public class LoggerAuditServiceImpl implements IAuditService {
      */
     @Override
     public void save(Audit audit) {
-        log.debug(MSG_PATTERN
+        log.info(MSG_PATTERN
                 , audit.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))
                 , audit.getApplicationName(), audit.getClassName(), audit.getMethodName()
                 , audit.getUserId(), audit.getUserName(), audit.getClientId()

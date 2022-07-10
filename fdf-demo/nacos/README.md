@@ -13,7 +13,6 @@ docker run -e JVM_XMS=256m -e JVM_XMX=256m -e MODE=standalone \
 -e MYSQL_SERVICE_USER=root \
 -e MYSQL_SERVICE_PASSWORD=123456 \
 -e MYSQL_SERVICE_DB_NAME=nacos_config \
--e NACOS_AUTH_ENABLE=true \
 --name nacos -d -p 8848:8848 nacos/nacos-server:1.4.2
 
 http://127.0.0.1:8848/nacos   nacos  nacos

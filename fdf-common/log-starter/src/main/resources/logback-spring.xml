@@ -9,6 +9,8 @@
     <springProperty name="LOG_FILEMAXDAY" scope="context" source="logback.filemaxday" defaultValue="7"/>
     <springProperty name="ServerIP" scope="context" source="spring.cloud.client.ip-address" defaultValue="0.0.0.0"/>
     <springProperty name="ServerPort" scope="context" source="server.port" defaultValue="0000"/>
+    <!--LogStash访问host-->
+    <springProperty name="LOG_STASH_HOST" scope="context" source="logstash.host" defaultValue="localhost"/>
 
     <!-- 彩色日志 -->
     <!-- 彩色日志依赖的渲染类 -->
@@ -84,6 +86,39 @@
         </rollingPolicy>
     </appender>
 
+    <!--接口访问记录日志输出到LogStash-->
+    <appender name="LOG_STASH_RECORD" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${LOG_STASH_HOST}:4560</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>Asia/Shanghai</timeZone>
+                </timestamp>
+                <!--自定义日志输出格式-->
+                <pattern>
+                    <pattern>
+                        {
+                        "project": "spring-cloud-learning",
+                        "level": "%level",
+                        "service": "${APP_NAME:-}",
+                        "class": "%logger",
+                        "traceId": "%X{traceId}",
+                        "spanId": "%X{spanId}",
+                        "message": "%message"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <!--当有多个LogStash服务时，设置访问策略为轮询-->
+        <connectionStrategy>
+            <roundRobin>
+                <connectionTTL>5 minutes</connectionTTL>
+            </roundRobin>
+        </connectionStrategy>
+    </appender>
+
+
     <appender name="point_log_async" class="ch.qos.logback.classic.AsyncAppender">
         <discardingThreshold>0</discardingThreshold>
         <appender-ref ref="point_log"/>
@@ -99,11 +134,13 @@
     <logger name="com.fandf.log.monitor" level="debug" addtivity="false">
         <appender-ref ref="point_log_async" />
     </logger>
-    <logger name="com.fandf.log.service.impl.LoggerAuditServiceImpl" level="debug" addtivity="false">
+    <logger name="com.fandf.log.service.impl.LoggerAuditServiceImpl" level="info" addtivity="false">
         <appender-ref ref="audit_log_async" />
     </logger>
-
-    <root level="info">
+    <logger name="com.fandf.log.aspect.WebLogAspect" level="DEBUG">
+        <appender-ref ref="LOG_STASH_RECORD"/>
+    </logger>
+    <root level="DEBUG">
         <appender-ref ref="StdoutAppender"/>
         <appender-ref ref="file_async"/>
     </root>

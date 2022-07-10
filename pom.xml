@@ -44,6 +44,7 @@
         <spring-data-elasticsearch.version>4.2.3</spring-data-elasticsearch.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <spring-boot-admin.version>2.5.6</spring-boot-admin.version>
+        <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
     </properties>
 
     <dependencies>
@@ -281,6 +282,11 @@
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-server</artifactId>
                 <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
