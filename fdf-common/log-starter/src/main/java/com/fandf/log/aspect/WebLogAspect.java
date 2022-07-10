@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -107,9 +106,9 @@ public class WebLogAspect {
             //将RequestParam注解修饰的参数作为请求参数
             RequestParam requestParam = parameters[i].getAnnotation(RequestParam.class);
             if (requestParam != null) {
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = new HashMap<>(4);
                 String key = parameters[i].getName();
-                if (!StringUtils.isEmpty(requestParam.value())) {
+                if (StrUtil.isNotEmpty(requestParam.value())) {
                     key = requestParam.value();
                 }
                 map.put(key, args[i]);

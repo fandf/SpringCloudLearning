@@ -2,7 +2,7 @@ server:
   port: 9005
 spring:
   profiles:
-    active: docker
+    active: dev
 fdf:
   audit-log:
     enabled: true
