@@ -34,7 +34,7 @@ public class ResourceServerConfiguration {
     private PermissionAuthManager permissionAuthManager;
 
     @Bean
-    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         //认证处理器
         ReactiveAuthenticationManager customAuthenticationManager = new CustomAuthenticationManager(tokenStore);
         JsonAuthenticationEntryPoint entryPoint = new JsonAuthenticationEntryPoint();

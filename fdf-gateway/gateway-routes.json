@@ -1,0 +1,172 @@
+[
+  {
+    "id": "generator",
+    "order": 1,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/api-generator/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      }
+    ],
+    "uri": "lb://code-generator"
+  },
+  {
+    "id": "search-center",
+    "order": 0,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/api-search/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      }
+    ],
+    "uri": "lb://search-center"
+  },
+  {
+    "id": "user-center",
+    "order": 0,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/api-user/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      }
+    ],
+    "uri": "lb://user-center"
+  },
+  {
+    "id": "auth",
+    "order": 0,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/api-uaa/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      }
+    ],
+    "uri": "lb://uaa-server"
+  },
+  {
+    "id": "auth-login-page",
+    "order": 0,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/login.html"
+        }
+      }
+    ],
+    "uri": "lb://uaa-server"
+  },
+  {
+    "id": "auth-login-process",
+    "order": 0,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/user/login"
+        }
+      }
+    ],
+    "uri": "lb://uaa-server"
+  },
+  {
+    "id": "auth-login-token",
+    "order": 0,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/oauth/token"
+        }
+      }
+    ],
+    "uri": "lb://uaa-server"
+  },
+  {
+    "id": "auth-login-authorize",
+    "order": 0,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/oauth/authorize"
+        }
+      }
+    ],
+    "uri": "lb://uaa-server"
+  },
+  {
+    "id": "auth-check-process",
+    "order": 0,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/oauth/check_token"
+        }
+      }
+    ],
+    "uri": "lb://uaa-server"
+  },
+  {
+    "id": "log",
+    "order": 1,
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/api-log/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      }
+    ],
+    "uri": "lb://log-center"
+  }
+]

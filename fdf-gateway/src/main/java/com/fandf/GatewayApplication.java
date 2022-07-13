@@ -1,4 +1,4 @@
-package com.fandf.gateway;
+package com.fandf;
 
 import com.fandf.common.lb.annotation.EnableBaseFeignInterceptor;
 import org.springframework.boot.SpringApplication;
@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author fandongfeng
- * @date 2022/6/29 18:06
+ * @date 2022/7/12 11:07
  */
 @EnableFeignClients
 @EnableBaseFeignInterceptor

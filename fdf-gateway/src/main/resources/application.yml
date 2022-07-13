@@ -57,21 +57,75 @@ spring:
           lower-case-service-id: true
           #网关自动根据注册中心的服务名为每个服务创建一个router
           enabled: true
-#          #不设置前缀默认ReactiveCompositeDiscoveryClient
-#          route-id-prefix: "fdf"
+      #          #不设置前缀默认ReactiveCompositeDiscoveryClient
+      #          route-id-prefix: "fdf"
       routes:
-        - id: code-generator
+        - id: generator
           uri: lb://code-generator
           predicates:
-            - Path=/api-code/**
+            - Path=/api-generator/**
+          filters:
+            - StripPrefix=1
+        - id: search-center
+          uri: lb://search-center
+          predicates:
+            - Path=/api-search/**
+          filters:
+            - StripPrefix=1
+        - id: user-center
+          uri: lb://user-center
+          predicates:
+            - Path=/api-user/**
+          filters:
+            - StripPrefix=1
+        - id: auth
+          uri: lb://uaa-server
+          predicates:
+            - Path=/api-uaa/**
           filters:
             - StripPrefix=1
             - PreserveHostHeader
+        - id: auth-login-page
+          uri: lb://uaa-server
+          predicates:
+            - Path=/login.html
+          filters:
+            - PreserveHostHeader
+        - id: auth-login-process
+          uri: lb://uaa-server
+          predicates:
+            - Path=/user/login
+          filters:
+            - PreserveHostHeader
+        - id: auth-login-token
+          uri: lb://uaa-server
+          predicates:
+            - Path=/oauth/token
+          filters:
+            - PreserveHostHeader
+        - id: auth-login-authorize
+          uri: lb://uaa-server
+          predicates:
+            - Path=/oauth/authorize
+          filters:
+            - PreserveHostHeader
+        - id: auth-check-process
+          uri: lb://uaa-server
+          predicates:
+            - Path=/oauth/check_token
+          filters:
+            - PreserveHostHeader
+        - id: log
+          uri: lb://log-center
+          predicates:
+            - Path=/api-log/**
+          filters:
+            - StripPrefix=1
 fdf:
   trace:
     enable: true
   swagger-agg:
-    generate-routes: code-generator
+    generate-routes: auth,user-center,generator,search-center
   oauth2:
     token:
       store:
@@ -80,7 +134,15 @@ fdf:
     ignore:
       # 忽略认证的地址
       httpUrls: >
-        /api-code/**
+        /*/v2/api-docs,
+        /api-uaa/oauth/**,
+        /api-uaa/validate/**,
+        /api-uaa/css/**,
+        /api-uaa/images/**,
+        /api-uaa/js/**,
+        /login.html,
+        /user/login,
+        /api-uaa/tokens/key
     auth:
       urlPermission:
         #是否开启url级别权限
@@ -92,13 +154,13 @@ fdf:
           /api-log/requestStat
         #白名单
         includeClientIds:
-#          - webApp
+      #          - webApp
       renew:
         #是否开启token自动续签（目前只有redis实现）
         enable: true
         #白名单
         includeClientIds:
-#          - webApp
+  #          - webApp
   gateway:
     #网关动态路由
     dynamicRoute:
