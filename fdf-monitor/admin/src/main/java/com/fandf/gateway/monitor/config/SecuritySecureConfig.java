@@ -1,4 +1,4 @@
-package com.fandf.monitor.config;
+package com.fandf.gateway.monitor.config;
 
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import org.springframework.context.annotation.Configuration;

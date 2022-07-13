@@ -1,4 +1,4 @@
-package com.fandf.monitor;
+package com.fandf.gateway;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
