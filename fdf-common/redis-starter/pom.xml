@@ -19,6 +19,18 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.redisson</groupId>
+                    <artifactId>redisson-spring-data-27</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- java.lang.NoClassDefFoundError: org/springframework/data/redis/connection/Su -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-data-21</artifactId>
+            <version>3.17.4</version>
         </dependency>
 
         <dependency>
