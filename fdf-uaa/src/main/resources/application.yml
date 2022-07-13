@@ -1,0 +1,49 @@
+server:
+  port: 8000
+  servlet:
+    session:
+      cookie:
+        name: OAUTH2SESSION
+
+spring:
+  application:
+    name: uaa-server
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/oauth-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.fandf.oauth.model
+  global-config:
+    db-config:
+      id-type: auto
+
+fdf:
+  oauth2:
+    token:
+      store:
+        type: redis
+  swagger:
+    enabled: true
+    title: 认证中心
+    description: 认证中心接口文档
+    version: 1.0
+    base-package: com.fandf.oauth.controller
+  security:
+    code:
+      # 忽略验证码的应用编号
+      ignoreClientCode: app
+    auth:
+      # 开启统一登出
+      unifiedLogout: true
+      # 同账号登录互踢
+      isSingleLogin: true
+  #多租户配置
+  tenant:
+    enable: true
+    ignoreTables:
+      - oauth_client_details
