@@ -1,0 +1,30 @@
+server:
+  port: 7100
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: search-center
+  elasticsearch:
+    rest:
+      uris: 127.0.0.1:9200
+# 暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+fdf:
+  indices:
+#    show: fdf-record-*,sys-log-*,mysql-slowlog-*,sys_user,point-log-*,audit-log-*
+    show: fdf-record-*
+  swagger:
+    enabled: true
+    title: 搜索中心
+    description: 搜索中心接口文档
+    version: 1.0
+    base-package: com.fandf.search.controller
