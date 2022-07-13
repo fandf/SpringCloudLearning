@@ -56,3 +56,9 @@ hs_err_pid*
 /fdf-monitor/admin/admin.iml
 /fdf-monitor/fdf-monitor.iml
 /fdf-demo/demo/demo.iml
+/fdf-business/search-client/search-client.iml
+/fdf-common/auth-starter/auth-starter.iml
+/fdf-uaa/fdf-uaa.iml
+/fdf-web/fdf-web.iml
+/fdf-web/back-web/back-web.iml
+/fdf-monitor/log-center/log-center.iml

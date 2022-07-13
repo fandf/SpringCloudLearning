@@ -45,6 +45,8 @@
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <spring-boot-admin.version>2.5.6</spring-boot-admin.version>
         <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
+        <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
     </properties>
 
     <dependencies>
@@ -105,6 +107,16 @@
             <dependency>
                 <groupId>com.fandf</groupId>
                 <artifactId>auth-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>elasticsearch-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>search-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--Spring Cloud Alibaba 版本管理器-->
@@ -288,6 +300,17 @@
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash-logback-encoder.version}</version>
             </dependency>
+            <!-- 验证码生成工具 -->
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${easy-captcha.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -311,13 +334,15 @@
 
     <modules>
         <!-- demo -->
-        <module>fdf-demo</module>
         <module>fdf-common</module>
+        <module>fdf-demo</module>
         <module>fdf-config</module>
         <module>fdf-gateway</module>
         <module>fdf-business</module>
         <module>fdf-job</module>
         <module>fdf-monitor</module>
+        <module>fdf-uaa</module>
+        <module>fdf-web</module>
     </modules>
 
 </project>
