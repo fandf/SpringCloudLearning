@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>admin</module>
+        <module>log-center</module>
     </modules>
 
 
