@@ -62,3 +62,5 @@ hs_err_pid*
 /fdf-web/fdf-web.iml
 /fdf-web/back-web/back-web.iml
 /fdf-monitor/log-center/log-center.iml
+/fdf-business/user-center/user-center.iml
+/fdf-web/user-platform/user-platform.iml

@@ -1,0 +1,226 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">广告管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!home_console">首页</a>
+          <a><cite>广告管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：<input id="advert-edit-search" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="advert-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="advert-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+
+        <!-- 数据表格 -->
+        <table class="layui-table" id="advert-table" lay-filter="advert-table"></table>
+    </div>
+</div>
+<!-- 表格操作列 -->
+<script type="text/html" id="advert-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="advert-model">
+    <form id="advert-form" method="POST" lay-filter="advert-form" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input name="title" placeholder="请输入名称" type="text" class="layui-input" maxlength="30"
+                       lay-verify="required" required/>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-upload">
+                <label class="layui-form-label">图片:</label>
+<!--                <div class="layui-upload layui-input-block">-->
+                    <input type="hidden" name="img" id="img" />
+                <button type="button" class="layui-btn layui-btn-primary" id="imgUploadBtn"><i class="layui-icon">&#xe67c;</i>选择文件</button>
+<!--                </div>-->
+                <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                    预览图：
+                    <div class="layui-upload-list" id="demo2"></div>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">上下架状态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="onlineStatus"
+                       value="1"
+                       lay-skin="switch" lay-text="上架|下架"
+                       {{d.status==1?'1':'0'}}
+                />
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">自动上架时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="autoOnlineTime" id="test111"
+                       placeholder="yyyy-MM-dd HH:mm:ss" autocomplete="off"
+                       class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">自动下架时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="autoOutlineTime" id="test222"
+                       placeholder="yyyy-MM-dd HH:mm:ss" autocomplete="off"
+                       class="layui-input"
+                      />
+            </div>
+        </div>
+
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+            <button class="layui-btn" lay-filter="advert-form-submit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/html" id="imgtmp">
+    <img src="{{d.img}}" style="width: 260px">
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload', 'laydate'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var upload = layui.upload;
+        var laydate = layui.laydate;
+
+        // 渲染表格
+        table.render({
+            elem: '#advert-table',
+            url: config.base_server + 'api-user/advert',
+            method: 'GET',
+            headers: {'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'title', width: 220, sort: true, title: '名称', style: "height:190px;"},
+                {field: 'img', width: 300, sort: true, title: '图片', templet: "#imgtmp"},
+                {field: 'img', width: 300, sort: true, title: '图片url'},
+                {
+                    width: 120, sort: true, title: '上下架状态', templet: function (d) {
+                        return d.onlineStatus === 1 ? "上架" : "下架"
+                    }
+                },
+                {field: 'autoOnlineTime', width: 150, sort: true, title: '自动上架时间', style: "height:190px;"},
+                {field: 'autoOutlineTime', width: 150, sort: true, title: '自动下架时间', style: "height:190px;"},
+                {fixed: 'right', align: 'center', width: 100, toolbar: '#advert-table-bar', title: '操作'}
+            ]]
+        });
+
+        // 工具条点击事件
+        table.on('tool(advert-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'del') { // 删除
+                doDelete(obj);
+            } else if (layEvent === 'edit') { //修改
+                showEditModel(data);
+            }
+        });
+
+
+        // 删除
+        var doDelete = function (obj) {
+            alert("删除功能不开放！")
+        };
+
+        // 搜索按钮点击事件
+        $('#advert-btn-search').click(function () {
+            var key = $('#advert-edit-search').val();
+            table.reload('advert-table', {where: {searchTxt: key}});
+        });
+
+        // 添加按钮点击事件
+        $('#advert-btn-add').click(function () {
+            showEditModel();
+
+        });
+
+        // 显示编辑弹窗
+        var showEditModel = function (data) {
+            layer.open({
+                type: 1,
+                title: data ? '修改广告' : '添加广告',
+                area: '750px',
+                offset: '30px',
+                content: $('#advert-model').html(),
+                success: function () {
+                    $('#advert-form')[0].reset();
+                    if (data) {
+                        form.val('advert-form', data);
+                    }
+
+                    upload.render({
+                        elem: '#imgUploadBtn',
+                        url: config.base_server + 'api-user/file/upload',
+                        accept: 'file',
+                        auto: true,
+                        headers: {"Authorization": "Bearer " + config.getToken().access_token},
+                        before: function (obj) {
+                            layer.load(); //上传loading
+                            //预读本地文件示例，不支持ie8
+                            obj.preview(function (index, file, result) {
+                                $(".layui-upload-img").remove();
+                                $('#demo2').append('<img src="' + result + '" width="50px" height="50px" alt="' + file.name + '" class="layui-upload-img">')
+                            });
+                        },
+                        done: function (data) {
+                            layer.closeAll('loading');
+                            $("[name=img]").val(data.datas.url);
+                        },
+                        error: function (data) {
+                            layer.closeAll('loading');
+                        }
+                    });
+                    //日期时间选择器
+                    laydate.render({
+                        elem: '#test222'
+                        ,type: 'datetime'
+                        ,trigger: "click"
+                    });
+                    laydate.render({
+                        elem: '#test111'
+                        ,type: 'datetime'
+                        ,trigger: "click"
+                    });
+
+                }
+            });
+        };
+
+        // 表单提交事件
+        form.on('submit(advert-form-submit)', function (data) {
+            console.log("data====", data)
+            layer.load(2);
+            admin.req('api-user/advert/saveOrUpdate', JSON.stringify(data.field), function (data) {
+                layer.closeAll('loading');
+                if (data.resp_code == 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    table.reload('advert-table');
+                    layer.closeAll('page');
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }, $('#advert-form').attr('method'));
+            return false;
+        });
+
+    });
+</script>

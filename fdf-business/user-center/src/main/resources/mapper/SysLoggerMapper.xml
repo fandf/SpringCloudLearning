@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fandf.user.mapper.SysLoggerMapper">
+	<sql id="Column_List">
+			id,
+			application_name as app_name,
+			class_name,
+			method_name,
+			user_id,
+			user_name,
+			client_id,
+			operation,
+			`timestamp`
+	</sql>
+
+	<sql id="where">
+		<where>
+			<if test="r.appName != null and r.appName != ''">
+				and t.application_name like concat('%', #{appName}, '%')
+			</if>
+			<if test="r.className != null and r.className != ''">
+				and t.className like concat('%', #{class_name}, '%')
+			</if>
+			<if test="r.methodName != null and r.methodName != ''">
+				and t.method_name like concat('%', #{methodName}, '%')
+			</if>
+			<if test="r.userId != null and r.userId != ''">
+				and t.user_id like concat('%', #{userId}, '%')
+			</if>
+			<if test="r.userName != null and r.userName != ''">
+				and t.user_name like concat('%', #{userName}, '%')
+			</if>
+			<if test="r.clientId != null and r.clientId != ''">
+				and t.client_id like concat('%', #{clientId}, '%')
+			</if>
+			<if test="r.operation != null and r.operation != ''">
+				and t.operation like concat('%', #{operation}, '%')
+			</if>
+
+
+			<if test="r.queryStr != null and r.queryStr != ''">
+				and t.method_name like concat('%', #{queryStr}, '%')
+			</if>
+		</where>
+	</sql>
+
+	<select id="findList" resultType="com.fandf.user.model.SysLogger">
+		select <include refid="Column_List"/>
+		from sys_logger t
+		<include refid="where" />
+		order by t.id desc
+	</select>
+
+</mapper>

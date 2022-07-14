@@ -97,7 +97,7 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Result handleException(Exception e) {
-        return defHandler("未知异常", e);
+        return defHandler(e.getMessage(), e);
     }
 
     private Result defHandler(String msg, Exception e) {

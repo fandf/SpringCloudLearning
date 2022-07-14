@@ -1,0 +1,217 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">奖品管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!home_console">首页</a>
+          <a><cite>奖品管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：<input id="draw-prize-edit-search" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="draw-prize-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="draw-prize-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+
+        <!-- 数据表格 -->
+        <table class="layui-table" id="draw-prize-table" lay-filter="draw-prize-table"></table>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="draw-prize-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">上下架</a>
+</script>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="draw-prize-model">
+    <form id="draw-prize-form" method="POST" lay-filter="draw-prize-form" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">奖品名称</label>
+            <div class="layui-input-block">
+                <input name="name" placeholder="请输入名称" type="text" class="layui-input" maxlength="30"
+                       lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">奖品值</label>
+            <div class="layui-input-block">
+                <input name="value" placeholder="请输入奖品值" type="number" class="layui-input" maxlength="20"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">概率</label>
+            <div class="layui-input-block">
+                <input name="probability" placeholder="请输入概率" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">奖品类型</label>
+            <div class="layui-input-block">
+                <input type="radio" name="type" value="1" title="BT" checked/>
+                <input type="radio" name="type" value="2" title="积分"/>
+                <input type="radio" name="type" value="3" title="再抽一次"/>
+                <input type="radio" name="type" value="4" title="谢谢参与"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上下架状态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="status"
+                       value="1"
+                       lay-skin="switch" lay-text="上架|下架"
+                       {{d.status==1?'1':'0'}}
+                />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否首页展示中奖记录</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="show" lay-skin="switch" lay-text="是|否"
+                       value="1" {{d.show==1?'1':'0'}} checked
+                >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">位置</label>
+            <div class="layui-input-block">
+                <input name="position" lay-verify="number" type="number" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">每天中奖次数</label>
+            <div class="layui-input-block">
+                <input name="dayMaxTimes" lay-verify="number" type="number" class="layui-input" max="100"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">每月中奖次数</label>
+            <div class="layui-input-block">
+                <input name="monthMaxTimes" lay-verify="number" type="number" class="layui-input" max="100"/>
+            </div>
+        </div>
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+            <button class="layui-btn" lay-filter="draw-prize-form-submit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin'],function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+
+        // 渲染表格
+        table.render({
+            elem: '#draw-prize-table',
+            url: config.base_server + 'api-user/draw/prize',
+            method: 'GET',
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'activityId',width:100, sort: true, title: '活动id'},
+                {field: 'name',width:180, sort: true, title: '奖品名称'},
+                {field: 'value',width:180, sort: true, title: '奖品值'},
+                {field: 'probability', width:250,sort: true, title: '奖品概率'},
+                {width:110, sort: true, title: '奖品类型', templet:function (d) {
+                        const type = d.type;
+                        if(type === 1){
+                            return "BT";
+                        }
+                        if(type === 2){
+                            return "积分";
+                        }
+                        if(type === 3){
+                            return "再抽一次";
+                        }
+                        return "谢谢参与";
+                    }},
+                {width:110, sort: true, title: '上下架状态', templet:function (d) {
+                        return d.status === 0 ? "下架" : "上架"
+                    }},
+                {field: 'position',width:80, sort: true, title: '位置'},
+                {field: 'show',width:130, sort: true, title: '是否展示'},
+                {field: 'dayMaxTimes',width:130, sort: true, title: '每天中奖次数'},
+                {field: 'monthMaxTimes',width:130, sort: true, title: '每月中奖次数'},
+                {fixed: 'right', align: 'center',width:150, toolbar: '#draw-prize-table-bar', title: '操作'}
+            ]]
+        });
+
+        // 工具条点击事件
+        table.on('tool(draw-prize-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'del') { // 删除
+                doDelete(obj);
+            }else if (layEvent === 'edit'){ //修改
+                showEditModel(data);
+            }
+        });
+
+
+        // 删除
+        var doDelete = function (obj) {
+            alert("上下架功能不开放！")
+        };
+
+        // 搜索按钮点击事件
+        $('#draw-prize-btn-search').click(function () {
+            var key = $('#draw-prize-edit-search').val();
+            table.reload('draw-prize-table', {where: {searchTxt: key}});
+        });
+
+        // 添加按钮点击事件
+        $('#draw-prize-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 显示编辑弹窗
+        var showEditModel = function (data) {
+            layer.open({
+                type: 1,
+                title: data ? '修改奖品' : '添加奖品',
+                area: '750px',
+                offset: '30px',
+                content: $('#draw-prize-model').html(),
+                success: function () {
+                    $('#draw-prize-form')[0].reset();
+                    if (data) {
+                        $("input[name='status']").attr('disabled',true);
+                        $("input[name='status']").attr('class',"layui-input layui-disabled");
+                        $("input[name='position']").attr('disabled',true);
+                        $("input[name='position']").attr('class',"layui-input layui-disabled");
+                        form.val('draw-prize-form', data);
+                    }
+                }
+            });
+        };
+
+        // 表单提交事件
+        form.on('submit(draw-prize-form-submit)', function (data) {
+            console.log("data===", data);
+            layer.load(2);
+            admin.req('api-user/draw/prize/saveOrUpdate', JSON.stringify(data.field), function (data) {
+                layer.closeAll('loading');
+                if (data.resp_code === 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    table.reload('draw-prize-table');
+                    layer.closeAll('page');
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }, $('#draw-prize-form').attr('method'));
+            return false;
+        });
+    });
+</script>

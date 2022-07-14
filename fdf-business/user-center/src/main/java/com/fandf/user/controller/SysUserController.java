@@ -187,7 +187,7 @@ public class SysUserController {
      * @param id
      */
     @PutMapping(value = "/users/{id}/password")
-    //@AuditLog(operation = "'重置用户密码:' + #id")
+    @AuditLog(operation = "'重置用户密码:' + #id")
     public Result resetPassword(@PathVariable Long id) {
         if (checkAdmin(id)) {
             return Result.failed(ADMIN_CHANGE_MSG);
@@ -201,9 +201,9 @@ public class SysUserController {
      */
     @PutMapping(value = "/users/password")
     public Result resetPassword(@RequestBody SysUser sysUser) {
-        if (checkAdmin(sysUser.getId())) {
-            return Result.failed(ADMIN_CHANGE_MSG);
-        }
+//        if (checkAdmin(sysUser.getId())) {
+//            return Result.failed(ADMIN_CHANGE_MSG);
+//        }
         appUserService.updatePassword(sysUser.getId(), sysUser.getOldPassword(), sysUser.getNewPassword());
         return Result.succeed("重置成功");
     }

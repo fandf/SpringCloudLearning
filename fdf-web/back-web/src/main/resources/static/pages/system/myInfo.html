@@ -86,7 +86,7 @@
         //文件上传
         upload.render({
             elem: '#fileBtn' ,
-            url:  config.base_server + 'api-file/files-anon',
+            url:  config.base_server + 'api-user/file/upload',
             accept: 'file' ,
             auto: true ,
             headers: {"Authorization" : "Bearer " + config.getToken().access_token},
@@ -100,8 +100,7 @@
             },
             done: function(data){
                 layer.closeAll('loading');
-                console.log(data);
-                $("[name=headImgUrl]").val(data.url);
+                $("[name=headImgUrl]").val(data.datas.url);
             },
             error: function (data) {
                 layer.closeAll('loading');

@@ -36,7 +36,7 @@
         // 渲染表格
         table.render({
             elem: '#auditLog-table',
-            url: config.base_server + 'api-log/auditLog',
+            url: config.base_server + 'api-user/auditLog',
             method: 'GET',
             headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: true,

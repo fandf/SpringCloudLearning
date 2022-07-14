@@ -591,6 +591,10 @@ html {
     border-radius: 0;
 }
 
+.layui-table img{
+    max-width:500px
+}
+
 /** tab关闭按钮样式 */
 .layui-layout-admin .layui-body .layui-tab .layui-tab-title li .layui-tab-close {
     width: 16px;

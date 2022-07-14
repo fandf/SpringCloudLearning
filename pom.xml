@@ -47,6 +47,7 @@
         <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
+        <aws.version>1.11.901</aws.version>
     </properties>
 
     <dependencies>
@@ -310,6 +311,11 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>${aws.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

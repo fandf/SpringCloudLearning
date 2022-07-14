@@ -14,6 +14,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_role_user")
 public class SysRoleUser extends Model<SysRoleUser> {
+	private static final long serialVersionUID = 3929037889257033310L;
 	private Long userId;
 	private Long roleId;
 }

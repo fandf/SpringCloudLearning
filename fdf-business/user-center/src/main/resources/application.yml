@@ -5,7 +5,7 @@ spring:
   application:
     name: user-center
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/user-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/userlink?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -33,7 +33,7 @@ fdf:
         second: 1800
   #多租户配置
   tenant:
-    enable: true
+    enable: false
     ignoreTables:
       - sys_user
       - sys_role_user
@@ -44,6 +44,17 @@ fdf:
       # 用户列表显示用户所关联的所有角色
       - com.fandf.user.mapper.SysUserRoleMapper.findRolesByUserIds
   #审计日志
-#  audit-log:
-#    enabled: true
-#    log-type: db
+  audit-log:
+    enabled: true
+    log-type: db
+
+s3:
+  # s3上已经存在该存储桶
+  file_bucket: 1111
+  # AWS 访问密钥
+  access_key: 1111
+  # AWS SECRET_KEY
+  secret_key: 1111
+  # AWS 地区
+  region: 111
+  url_prefix: 111
