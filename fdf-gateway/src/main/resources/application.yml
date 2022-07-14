@@ -1,5 +1,5 @@
 server:
-  port: 9900
+  port: 10026
 spring:
   resources:
     #不加启动后 doc.html 404

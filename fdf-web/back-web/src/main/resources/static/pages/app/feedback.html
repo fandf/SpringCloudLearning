@@ -1,0 +1,58 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">意见反馈</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!home_console">首页</a>
+          <a><cite>意见反馈</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：<input id="feedback-edit-search" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="feedback-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+        </div>
+
+        <!-- 数据表格 -->
+        <table class="layui-table" id="feedback-table" lay-filter="feedback-table"></table>
+    </div>
+</div>
+
+<script>
+    layui.use(['table', 'config', 'util'], function () {
+        var table = layui.table;
+        var config = layui.config;
+        var util = layui.util;
+        // 渲染表格
+        table.render({
+            elem: '#feedback-table',
+            url: config.base_server + 'api-user/feedback',
+            method: 'GET',
+            headers: {'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'token', width: 220, sort: true, title: '用户'},
+                {field: 'content', width: 400, sort: true, title: '反馈内容',},
+                {field: 'img', width: 300, sort: true, title: '反馈图片'},
+                {field: 'osv', width: 150, sort: true, title: '手机型号'},
+                {field: 'appVersion', width: 150, sort: true, title: 'app版本'},
+                {
+                    width: 120, sort: true, title: '设备', templet: function (d) {
+                        return d.device === 'a' ? "安卓" : "ios"
+                    }
+                },
+                {
+                    sort: true, width: 180, templet: function (d) {
+                        return util.toDateString(d.addTime);
+                    }, title: '反馈时间'
+                },
+            ]]
+        });
+
+        // 搜索按钮点击事件
+        $('#feedback-btn-search').click(function () {
+            var key = $('#feedback-edit-search').val();
+            table.reload('feedback-table', {where: {searchTxt: key}});
+        });
+    });
+</script>

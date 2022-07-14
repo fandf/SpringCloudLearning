@@ -1,5 +1,5 @@
 server:
-  port: 8000
+  port: 10027
   servlet:
     session:
       cookie:
@@ -9,9 +9,9 @@ spring:
   application:
     name: uaa-server
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/oauth-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
+    url: jdbc:mysql://${fdf.datasource.url}/userlink?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: ${fdf.datasource.username}
+    password: ${fdf.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis-plus:

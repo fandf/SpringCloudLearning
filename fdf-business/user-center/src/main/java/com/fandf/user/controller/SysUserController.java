@@ -7,12 +7,8 @@ import com.fandf.common.constant.CommonConstant;
 import com.fandf.common.model.*;
 import com.fandf.common.utils.ExcelUtil;
 import com.fandf.log.annotation.AuditLog;
-import com.fandf.search.client.service.IQueryService;
-import com.fandf.search.model.LogicDelDTO;
-import com.fandf.search.model.SearchDTO;
 import com.fandf.user.model.SysUserExcel;
 import com.fandf.user.service.ISysUserService;
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -43,16 +39,9 @@ import java.util.Set;
 public class SysUserController {
     private static final String ADMIN_CHANGE_MSG = "超级管理员不给予修改";
 
-    /**
-     * 全文搜索逻辑删除Dto
-     */
-    private static final LogicDelDTO SEARCH_LOGIC_DEL_DTO = new LogicDelDTO("isDel", "否");
-
     @Autowired
     private ISysUserService appUserService;
 
-    @Autowired
-    private IQueryService queryService;
 
     /**
      * 当前登录用户 LoginAppUser
@@ -276,12 +265,6 @@ public class SysUserController {
             @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer"),
             @ApiImplicitParam(name = "queryStr", value = "搜索关键字", dataType = "String")
     })
-    @GetMapping("/users/search")
-    public PageResult<JsonNode> search(SearchDTO searchDto) {
-        searchDto.setIsHighlighter(true);
-        searchDto.setSortCol("createTime");
-        return queryService.strQuery("sys_user", searchDto, SEARCH_LOGIC_DEL_DTO);
-    }
 
     /**
      * 是否超级管理员

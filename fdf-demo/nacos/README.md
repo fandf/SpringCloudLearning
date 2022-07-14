@@ -11,7 +11,7 @@ docker run -e JVM_XMS=256m -e JVM_XMX=256m -e MODE=standalone \
 -e MYSQL_SERVICE_HOST=host.docker.internal \
 -e MYSQL_SERVICE_PORT=3306 \
 -e MYSQL_SERVICE_USER=root \
--e MYSQL_SERVICE_PASSWORD=123456 \
+-e MYSQL_SERVICE_PASSWORD=Aamysql@#bwitter \
 -e MYSQL_SERVICE_DB_NAME=nacos_config \
 --name nacos -d -p 8848:8848 nacos/nacos-server:1.4.2
 
