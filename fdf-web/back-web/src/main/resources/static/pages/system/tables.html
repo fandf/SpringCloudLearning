@@ -1,0 +1,52 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">表管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!home_console">首页</a>
+          <a><cite>表管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：<input id="table-edit-search" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="table-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+        </div>
+
+        <!-- 数据表格 -->
+        <table class="layui-table" id="table-table" lay-filter="table-table"></table>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload', 'laydate'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var upload = layui.upload;
+        var laydate = layui.laydate;
+
+        // 渲染表格
+        table.render({
+            elem: '#table-table',
+            url: config.base_server + 'api-user/sys/tables',
+            method: 'GET',
+            headers: {'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'tableName', width: 220, sort: true, title: '表名'},
+                {field: 'tableRows', width: 300, sort: true, title: '数据量'},
+                {field: 'tableComment', width: 300, sort: true, title: '备注'},
+            ]]
+        });
+
+        // 搜索按钮点击事件
+        $('#table-btn-search').click(function () {
+            var key = $('#table-edit-search').val();
+            table.reload('table-table', {where: {searchTxt: key}});
+        });
+
+    });
+</script>

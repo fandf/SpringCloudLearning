@@ -96,7 +96,6 @@
                 success: function (data) {
                     console.log(JSON.stringify(data));
                     if (data.resp_code === 0) {
-                        debugger;
                         config.putToken(data.datas);
                         layer.msg('登录成功', {icon: 1, time: 500}, function () {
                             location.replace('./');

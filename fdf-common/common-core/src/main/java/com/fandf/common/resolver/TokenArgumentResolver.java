@@ -27,7 +27,7 @@ import java.util.List;
 @Slf4j
 public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private UserService userService;
+    private final UserService userService;
 
     public TokenArgumentResolver(UserService userService) {
         this.userService = userService;

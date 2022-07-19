@@ -43,8 +43,8 @@
     <div class="layui-row layui-col-space10">
         <div class="layui-col-sm2 layui-col-md2">
             <div class="layui-card">
-                <div class="layui-card-header">在线人数
-                    <span class="layui-badge layui-bg-cyan layuiadmin-badge">时</span>
+                <div class="layui-card-header">app用户总数
+<!--                    <span class="layui-badge layui-bg-cyan layuiadmin-badge">时</span>-->
                 </div>
                 <div class="layui-card-body layuiadmin-card-list">
                     <p class="big-font" id="userCnt"></p>
@@ -110,7 +110,7 @@
         <div class="layui-col-lg6 layui-col-md6">
             <div class="layui-card">
                 <div class="card-block">
-                    <div id="browser-container" style="height:300px"></div>
+                    <div id="mobile-container" style="height:300px"></div>
                 </div>
             </div>
         </div>
@@ -187,10 +187,10 @@
             });
         }
 
-        let browserChart = echarts.init(document.getElementById("browser-container"), layui.echartsTheme);
-        browserChart.setOption({
+        let mobileChart = echarts.init(document.getElementById("mobile-container"), layui.echartsTheme);
+        mobileChart.setOption({
             title : {
-                text: '浏览器分布',
+                text: '机型分布',
                 subtext: '',
                 x:'center'
             },
@@ -198,7 +198,7 @@
             legend: {},
             series : []
         });
-        browserChart.showLoading();
+        mobileChart.showLoading();
 
         let osChart = echarts.init(document.getElementById("operatingSystem-container"), layui.echartsTheme);
         osChart.setOption({
@@ -231,28 +231,28 @@
         });
         weekChart.showLoading();
 
-        admin.req('api-log/requestStat', {}, function (data) {
+        admin.req('api-user/console/requestStat', {}, function (data) {
             statData = data;
             $('#pv').html(data.currDate_pv);
             $('#uv').html(data.currDate_uv);
             $('#weekPv').html(data.currWeek_pv);
             $('#monthPv').html(data.currMonth_pv);
-            $('#userCnt').html(data.currHour_uv);
+            $('#userCnt').html(data.userCnt);
 
-            browserChart.hideLoading()
-            browserChart.setOption({
+            mobileChart.hideLoading()
+            mobileChart.setOption({
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: data.browser_legendData
+                    data: data.mobile_legendData
                 },
                 series : [
                     {
-                        name: '访问来源',
+                        name: '手机型号',
                         type: 'pie',
                         radius : '55%',
                         center: ['60%', '60%'],
-                        data: data.browser_datas
+                        data: data.mobile_datas
                     }
                 ]
             });
