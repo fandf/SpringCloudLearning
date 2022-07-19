@@ -199,7 +199,6 @@
 
         // 表单提交事件
         form.on('submit(draw-prize-form-submit)', function (data) {
-            console.log("data===", data);
             layer.load(2);
             admin.req('api-user/draw/prize/saveOrUpdate', JSON.stringify(data.field), function (data) {
                 layer.closeAll('loading');

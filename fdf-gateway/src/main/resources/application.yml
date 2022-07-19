@@ -125,7 +125,7 @@ fdf:
   trace:
     enable: true
   swagger-agg:
-    generate-routes: auth,user-center,generator,search-center
+    generate-routes: user-center,auth
   oauth2:
     token:
       store:

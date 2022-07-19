@@ -1,0 +1,148 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">推荐关注</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!home_console">首页</a>
+          <a><cite>推荐关注</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：<input id="follow-edit-search" class="layui-input search-input" type="text" placeholder="输入钱包地址"/>&emsp;
+            <button id="follow-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="follow-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+
+        <!-- 数据表格 -->
+        <table class="layui-table" id="follow-table" lay-filter="follow-table"></table>
+    </div>
+</div>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="follow-model">
+    <form id="follow-form" lay-filter="follow-form" class="layui-form model-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">token</label>
+            <div class="layui-input-block">
+                <input name="token" placeholder="请输入token" type="text" class="layui-input" maxlength="100"
+                       lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">order</label>
+            <div class="layui-input-block">
+                <input name="order" placeholder="请输入排序" type="number" class="layui-input" max="255"
+                       min="0" oninput="if(value>255) value = 255;if(value  < 0) value  = 0;"
+                       lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+            <button class="layui-btn" lay-filter="follow-form-submit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="follow-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    layui.use(['table', 'config', 'util', 'form','admin'], function () {
+        var table = layui.table;
+        var config = layui.config;
+        var util = layui.util;
+        var form = layui.form;
+        var admin = layui.admin;
+        // 渲染表格
+        table.render({
+            elem: '#follow-table',
+            url: config.base_server + 'api-user/follow/recommend',
+            method: 'GET',
+            headers: {'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'token', width: 350, sort: true, title: '用户地址'},
+                {field: 'userName', width: 200, sort: true, title: '用户名',},
+                {field: 'order', width: 100, sort: true, title: '排序'},
+                {align: 'center', toolbar: '#follow-table-bar', title: '操作', width: 250}
+            ]]
+        });
+
+
+        // 添加按钮点击事件
+        $('#follow-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 工具条点击事件
+        table.on('tool(follow-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') { //修改
+                showEditModel(data);
+            } else if (obj.event === 'del') { //删除
+                doDelete(obj);
+            }
+        });
+        // 显示编辑弹窗
+        var showEditModel = function (data) {
+            layer.open({
+                type: 1,
+                title: data ? '修改推荐' : '新增推荐',
+                area: '450px',
+                offset: '120px',
+                content: $('#follow-model').html(),
+                success: function () {
+                    $('#follow-form')[0].reset();
+                    if (data) {
+                        $("input[name='token']").attr('disabled', true);
+                        $("input[name='token']").attr('class', "layui-input layui-disabled");
+                        form.val('follow-form', data);
+                    }
+                }
+            });
+        };
+
+        // 表单提交事件
+        form.on('submit(follow-form-submit)', function (data) {
+            layer.load(2);
+            admin.req('api-user/follow/recommend/saveOrUpdate', JSON.stringify(data.field), function (data) {
+                layer.closeAll('loading');
+                if (data.resp_code === 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    table.reload('follow-table');
+                    layer.closeAll('page');
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }, 'post');
+            return false;
+        });
+
+        // 删除
+        var doDelete = function (obj) {
+            layer.confirm('确定要删除吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                admin.req('api-user/follow/recommend/' + obj.data.token, {}, function (data) {
+                    layer.closeAll('loading');
+                    if (data.resp_code === 0) {
+                        layer.msg(data.resp_msg, {icon: 1, time: 500});
+                        obj.del();
+                    } else {
+                        layer.msg(data.resp_msg, {icon: 2, time: 500});
+                    }
+                }, 'DELETE');
+            });
+        };
+
+        // 搜索按钮点击事件
+        $('#follow-btn-search').click(function () {
+            var key = $('#follow-edit-search').val();
+            table.reload('follow-table', {where: {searchTxt: key}});
+        });
+    });
+</script>

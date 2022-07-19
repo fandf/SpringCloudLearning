@@ -1,0 +1,169 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">app用户管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>app用户管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：
+            <select id="user-search-key">
+                <option value="">-请选择-</option>
+                <option value="token">钱包地址</option>
+                <option value="user_name">用户名</option>
+                <option value="liang_hao">靓号</option>
+                <option value="claim">认证用户</option>
+            </select>&emsp;
+            <input id="user-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="user-btn-export" class="layui-btn icon-btn"><i class="layui-icon">&#xe601;</i>导出</button>
+        </div>
+
+        <table class="layui-table" id="user-table" lay-filter="user-table"></table>
+    </div>
+</div>
+
+
+<!-- 表格操作列 -->
+<script type="text/html" id="user-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+</script>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="user-tpl-state">
+    <input type="checkbox" lay-filter="user-tpl-state" value="{{d.token}}" lay-skin="switch" lay-text="认证|未认证"
+           {{d.claim===1?'checked':''}}/>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+        //上传
+        var upload = layui.upload;
+
+        // 渲染表格
+        table.render({
+            elem: '#user-table',
+            url: config.base_server + 'api-user/app_user',
+            method: 'GET',
+            headers: {'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'token', width: 220, title: '用户地址'},
+                {field: 'userName', width: 120, title: '用户名'},
+                {field: 'liangHao', width: 120, title: '靓号'},
+                {field: 'email', width: 120, title: '邮箱'},
+                {field: 'claim', width: 120, templet: '#user-tpl-state', title: '是否认证'},
+                {
+                    width: 80, title: '是否发币', templet: function (d) {
+                        return d.certification === 1 ? "是" : "否"
+                    }
+                },
+                {field: 'contractAddress', width: 150, sort: true, title: '代币地址'},
+                {field: 'price', sort: true, width: 120, title: '代币价格（BT）'},
+                {field: 'invitationCode', width: 120, sort: true, title: '邀请码'},
+                {field: 'leaderCode', width: 120, sort: true, title: '导师'},
+                {field: 'leaderName', width: 120, sort: true, title: '导师名称'},
+                {
+                    width: 120, sort: true, title: '来源', templet: function (d) {
+                        return d.source === 'a' ? "安卓" : "H5"
+                    }
+                },
+                {field: 'appVersion', width: 120, sort: true, title: 'app版本'},
+                {field: 'osv', width: 120, sort: true, title: '设备'},
+                {
+                    width: 200, sort: true, templet: function (d) {
+                        return util.toDateString(d.created);
+                    }, title: '创建时间'
+                },
+                {fixed: 'right', align: 'center', toolbar: '#user-table-bar', title: '操作', width: 175}
+            ]]
+        });
+
+        // 添加按钮点击事件
+        $('#user-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 工具条点击事件
+        table.on('tool(user-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'edit') { // 修改
+                layer.open({
+                    title: '提示'
+                    , content: '待开发，不允许修改'
+                });
+            }
+        });
+
+        // 搜索按钮点击事件
+        $('#user-btn-search').click(function () {
+            var key = $('#user-search-key').val();
+            var value = $('#user-search-value').val();
+            table.reload('user-table', {where: {searchKey: key, searchValue: value}});
+        });
+
+        // 导出
+        $('#user-btn-export').click(function () {
+            layer.open({
+                title: '在线调试'
+                , content: '待开发，试试效果'
+            });
+            // var url = config.base_server + 'api-user/users/export';
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('POST', url, true);
+            // xhr.responseType = "blob";
+            // xhr.setRequestHeader("client_type", "DESKTOP_WEB");
+            // xhr.setRequestHeader("Authorization", "Bearer " + config.getToken().access_token);
+            // xhr.onload = function() {
+            //     if (this.status == 200) {
+            //         var fileName = "user.xlsx";
+            //         var blob = this.response;
+            //         var a = document.createElement('a');
+            //         a.innerHTML = fileName;
+            //         // 指定生成的文件名
+            //         a.download = fileName;
+            //         a.href = URL.createObjectURL(blob);
+            //         document.body.appendChild(a);
+            //         var evt = document.createEvent("MouseEvents");
+            //         evt.initEvent("click", false, false);
+            //         a.dispatchEvent(evt);
+            //         document.body.removeChild(a);
+            //     }
+            // }
+            // xhr.send();
+        });
+
+        // 修改user状态
+        form.on('switch(user-tpl-state)', function (obj) {
+            layer.confirm('确定修改用户认证状态吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                admin.req('api-user/app_user/update_claim', {
+                    token: obj.elem.value,
+                    claim: obj.elem.checked ? 1 : 0
+                }, function (data) {
+                    layer.closeAll('loading');
+                    if (data.resp_code == 0) {
+                        layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    } else {
+                        layer.msg(data.resp_msg, {icon: 2, time: 500});
+                        $(obj.elem).prop('checked', !obj.elem.checked);
+                        form.render('checkbox');
+                    }
+                }, 'GET');
+            });
+        });
+
+    });
+</script>

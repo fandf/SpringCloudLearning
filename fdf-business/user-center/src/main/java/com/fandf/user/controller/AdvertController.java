@@ -31,7 +31,7 @@ public class AdvertController {
 
     @PostMapping("advert/saveOrUpdate")
     @ApiOperation(value = "保存或者修改广告")
-    @AuditLog(operation = "保存或者修改广告")
+    @AuditLog(operation = "'保存或者修改广告:' + #advert.title")
     public Result saveOrUpdate(@RequestBody Advert advert) throws Exception {
         return advertService.saveAdvert(advert);
     }

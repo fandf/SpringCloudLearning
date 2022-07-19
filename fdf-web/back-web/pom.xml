@@ -40,6 +40,38 @@
                     <mainClass>com.fandf.web.BackWebApplication</mainClass>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <images>
+                        <image>
+                            <!-- 命名空间/仓库名称:镜像版本号-->
+                            <name>fandf/${project.name}:${project.version}</name>
+                            <alias>${project.name}</alias>
+                            <build>
+                                <!-- 指定dockerfile文件的位置-->
+                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                <buildOptions>
+                                    <!-- 网络的配置，与宿主主机共端口号-->
+                                    <network>host</network>
+                                </buildOptions>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>docker-exec</id>
+                        <!-- 绑定mvn install阶段，当执行mvn install时 就会执行docker build 和docker push-->
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <!--                            <goal>push</goal>-->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

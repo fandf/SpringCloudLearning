@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -27,6 +28,7 @@ import java.util.Date;
 @TableName("user_info")
 @ApiModel(value = "AppUser对象", description = "app用户表")
 @NoArgsConstructor
+@Accessors(chain = true)
 public class UserInfo extends Model<UserInfo> {
 
     @ApiModelProperty(value = "用户token")
@@ -62,6 +64,8 @@ public class UserInfo extends Model<UserInfo> {
     private String invitationCode;
     @ApiModelProperty(value = "app我的导师code")
     private String leaderCode;
+    @TableField(exist = false)
+    private String leaderName;
     @ApiModelProperty(value = "绑定导师时间")
     private Date leaderTime;
     @ApiModelProperty(value = "来源：h5  安卓:a   ios: i")

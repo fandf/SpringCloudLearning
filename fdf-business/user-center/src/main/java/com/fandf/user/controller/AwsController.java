@@ -2,6 +2,7 @@ package com.fandf.user.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.fandf.common.model.Result;
+import com.fandf.log.annotation.AuditLog;
 import com.fandf.user.model.AwsUploadVO;
 import com.fandf.user.model.FrameImageInfo;
 import com.fandf.user.service.impl.FileUpServiceImpl;
@@ -30,6 +31,7 @@ public class AwsController {
 
     @PostMapping(value = "/upload")
     @ApiOperation(value = "aws上传文件")
+    @AuditLog(operation = "上传文件")
     public Result<AwsUploadVO> upload(@RequestParam("file") MultipartFile file) throws IOException {
         FrameImageInfo imageInfo = fileUpService.uploadAws(file);
         AwsUploadVO awsUploadVO = BeanUtil.copyProperties(imageInfo, AwsUploadVO.class);

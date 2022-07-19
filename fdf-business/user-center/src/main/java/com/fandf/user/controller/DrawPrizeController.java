@@ -35,7 +35,7 @@ public class DrawPrizeController {
 
     @PostMapping("/prize/saveOrUpdate")
     @ApiOperation(value = "保存或者修改奖品")
-    @AuditLog(operation = "保存或者修改奖品")
+    @AuditLog(operation = "'保存或者修改奖品:' + #drawPrizeDTO.name")
     public Result saveOrUpdate(@RequestBody DrawPrizeDTO drawPrizeDTO) throws Exception {
         return drawPrizeService.saveDrawPrize(drawPrizeDTO);
     }

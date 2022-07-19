@@ -45,7 +45,7 @@ public class ConsoleServiceImpl implements IConsoleService {
         Long weekCount = appPointMapper.selectCount(new LambdaQueryWrapper<AppPoint>().ge(AppPoint::getCreated, week));
         map.put("currWeek_pv", weekCount == null ? 0 : weekCount / 2);
         String month = DateUtil.formatDate(DateUtil.offsetMonth(new Date(), -1)) + " 00:00:00";
-        Long monthCount = appPointMapper.selectCount(new QueryWrapper<AppPoint>().select("distinct token").ge("created", month));
+        Long monthCount = appPointMapper.selectCount(new LambdaQueryWrapper<AppPoint>().ge(AppPoint::getCreated, month));
         map.put("currMonth_pv", monthCount == null ? 0 : monthCount / 2);
 
         //日活
