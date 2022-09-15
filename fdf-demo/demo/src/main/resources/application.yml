@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: demo
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+#    CREATE DATABASE  flowable-spring-boot DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+    url: jdbc:mysql://127.0.0.1:3306/flowable-spring-boot?characterEncoding=UTF-8
+    username: root
+    password: 0327
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: tenant-default
+      username: admin
+      password: 123456
+      authentication-database: admin
+      auto-index-creation: false
+logging:
+  level:
+    org.springframework.data.mongodb.core: debug
+
+
+
