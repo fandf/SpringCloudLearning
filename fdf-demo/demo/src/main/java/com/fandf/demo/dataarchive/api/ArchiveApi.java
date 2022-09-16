@@ -1,22 +1,15 @@
 package com.fandf.demo.dataarchive.api;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.fandf.demo.dataarchive.exception.AsyncThreadException;
 import com.fandf.demo.dataarchive.service.ArchiveService;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
 
 import javax.annotation.Resource;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.*;
 
 /**
@@ -40,12 +33,12 @@ public class ArchiveApi {
         }
 
         // 存放异步返回结果的List
-        List<FutureTask<String>> futureTaskList = new ArrayList<>();
+        List<FutureTask<Object>> futureTaskList = new ArrayList<>();
         // 线程池
         ThreadPoolExecutor executor = new ThreadPoolExecutor(20, 50, 10, TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<Runnable>(count), new ThreadPoolExecutor.AbortPolicy());
+                new ArrayBlockingQueue<>(count), new ThreadPoolExecutor.AbortPolicy());
         // 异常结果存放
-        final List<String> results = new ArrayList<String>();
+        final List<String> results = new ArrayList<>();
 
         try {
             for (int i = 0; i < list.size(); i++) {
@@ -61,11 +54,11 @@ public class ArchiveApi {
                         }
                     }
                 });
-                FutureTask<String> futureTask = new FutureTask<>(task);
+                FutureTask<Object> futureTask = new FutureTask<>(task);
                 executor.submit(futureTask);
                 futureTaskList.add(futureTask);
             }
-            for (FutureTask<String> item : futureTaskList) {
+            for (FutureTask<Object> item : futureTaskList) {
                 System.out.println("task运行结果" + item.get());
             }
         } catch (Exception e) {
@@ -82,7 +75,7 @@ public class ArchiveApi {
     }
 
 
-    class Task implements Callable<String> {
+    class Task implements Callable<Object> {
 
         private int num = 0;
         private int line = 0;
