@@ -1,0 +1,31 @@
+spring:
+  rabbitmq:
+    addresses: 127.0.0.1:5672
+    username: fandf
+    password: fandf
+    virtual-host: /fandf
+    #开启消息确认模式，新版本已经弃用
+    #publisher-confirms: true
+    #开启消息送达提示
+    publisher-returns: true
+    # springboot.rabbitmq.publisher-confirm 新版本已被弃用，现在使用 spring.rabbitmq.publisher-confirm-type = correlated 实现相同效果
+    # NONE值是禁用发布确认模式，是默认值
+    # CORRELATED值是发布消息成功到交换器后会触发回调方法
+    # SIMPLE值经测试有两种效果，其一效果和CORRELATED值一样会触发回调方法，其二在发布消息成功后使用rabbitTemplate调用waitForConfirms或waitForConfirmsOrDie方法等待broker节点返回发送结果，根据返回结果来判定下一步的逻辑，要注意的点是waitForConfirmsOrDie方法如果返回false则会关闭channel，则接下来无法发送消息到broker;
+    publisher-confirm-type: correlated
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual #确认模式
+        prefetch: 1 #限制每次发送一条数据。
+        #重试策略相关配置
+        retry:
+          # 开启消费者(程序出现异常)重试机制，默认开启并一直重试
+          enabled: true
+          # 最大重试次数
+          max-attempts: 5
+          # 重试间隔时间(毫秒)
+          initial-interval: 3000
+    template:
+      mandatory: true

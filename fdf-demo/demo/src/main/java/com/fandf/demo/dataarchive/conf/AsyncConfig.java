@@ -1,9 +1,6 @@
 package com.fandf.demo.dataarchive.conf;
 
 import com.fandf.demo.dataarchive.exception.AsyncThreadException;
-import com.fandf.demo.dataarchive.handler.CustomAsyncExceptionHandler;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -57,7 +54,7 @@ public class AsyncConfig implements AsyncConfigurer {
     static class MyThreadFactory implements ThreadFactory {
 
         @Override
-        public Thread newThread(@NotNull Runnable r) {
+        public Thread newThread(Runnable r) {
             Thread thread = new Thread(r);
             thread.setUncaughtExceptionHandler((t, e)->{
                 throw new AsyncThreadException(e.getMessage());

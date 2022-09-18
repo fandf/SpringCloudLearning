@@ -1,4 +1,4 @@
-package com.fandf.demo.design.chain;
+package com.fandf.demo.design.责任链;
 
 public class LengthCheckProcessor implements Processor{
     @Override

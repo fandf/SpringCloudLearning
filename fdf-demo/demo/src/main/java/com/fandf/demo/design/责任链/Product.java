@@ -1,4 +1,4 @@
-package com.fandf.demo.design.chain;
+package com.fandf.demo.design.责任链;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

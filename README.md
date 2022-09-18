@@ -20,3 +20,13 @@ seata
 ### 1. nacos测试
 https://github.com/fandf/SpringCloudLearning/tree/master/fdf-demo/nacos/README.md
 
+
+docker run -d -p 2181:2181 \
+-v /Users/dongfengfan/docker/zookeeper/data/:/data/ \
+--name=zookeeper --privileged zookeeper:3.8.0
+
+
+docker run -d -p 5672:5672 \
+-p 15672:15672 --name rabbitmq \
+-e  RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin \
+rabbitmq:management

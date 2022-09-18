@@ -15,6 +15,7 @@
         <module>seata-demo</module>
         <module>sharding-jdbc-demo</module>
         <module>demo</module>
+        <module>rabbitmq</module>
     </modules>
 
 </project>

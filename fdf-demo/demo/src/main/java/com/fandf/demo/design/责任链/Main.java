@@ -1,4 +1,4 @@
-package com.fandf.demo.design.chain;
+package com.fandf.demo.design.责任链;
 
 /**
  * 责任链设计模式

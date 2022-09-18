@@ -48,6 +48,8 @@
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
         <aws.version>1.11.901</aws.version>
+        <curator.version>5.3.0</curator.version>
+        <mongodb.version>2.7.1</mongodb.version>
     </properties>
 
     <dependencies>
@@ -316,6 +318,17 @@
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-java-sdk-s3</artifactId>
                 <version>${aws.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-mongodb</artifactId>
+                <version>${mongodb.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
