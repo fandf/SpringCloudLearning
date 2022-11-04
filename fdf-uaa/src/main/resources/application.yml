@@ -47,3 +47,5 @@ fdf:
     enable: true
     ignoreTables:
       - oauth_client_details
+  trace:
+    enable: true

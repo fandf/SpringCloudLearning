@@ -16,6 +16,7 @@
         <module>sharding-jdbc-demo</module>
         <module>demo</module>
         <module>rabbitmq</module>
+        <module>mongo</module>
     </modules>
 
 </project>
