@@ -21,6 +21,8 @@
         <module>redis-starter</module>
         <module>auth-starter</module>
         <module>elasticsearch-starter</module>
+        <module>zookeeper-starter</module>
+        <module>mongo-starter</module>
     </modules>
 
 

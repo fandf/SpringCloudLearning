@@ -1,7 +1,0 @@
-/Users/dongfengfan/IdeaProjects/SpringCloudLearning/fdf-job/job-executor-samples/src/main/java/com/xxl/job/executor/JobExecutorApplication.java
-/Users/dongfengfan/IdeaProjects/SpringCloudLearning/fdf-job/job-executor-samples/src/main/java/com/xxl/job/executor/core/config/XxlJobConfig.java
-/Users/dongfengfan/IdeaProjects/SpringCloudLearning/fdf-job/job-executor-samples/src/main/java/com/xxl/job/executor/service/jobhandler/ShardingJobHandler.java
-/Users/dongfengfan/IdeaProjects/SpringCloudLearning/fdf-job/job-executor-samples/src/main/java/com/xxl/job/executor/service/jobhandler/DemoJobHandler.java
-/Users/dongfengfan/IdeaProjects/SpringCloudLearning/fdf-job/job-executor-samples/src/main/java/com/xxl/job/executor/service/jobhandler/HttpJobHandler.java
-/Users/dongfengfan/IdeaProjects/SpringCloudLearning/fdf-job/job-executor-samples/src/main/java/com/xxl/job/executor/mvc/controller/IndexController.java
-/Users/dongfengfan/IdeaProjects/SpringCloudLearning/fdf-job/job-executor-samples/src/main/java/com/xxl/job/executor/service/jobhandler/CommandJobHandler.java

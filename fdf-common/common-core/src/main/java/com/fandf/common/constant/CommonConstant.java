@@ -71,4 +71,8 @@ public interface CommonConstant {
     Integer PERMISSION = 2;
 
     String DEF_USER_PASSWORD = "123456";
+    /**
+     * 文件分隔符
+     */
+    String PATH_SPLIT = "/";
 }

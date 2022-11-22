@@ -1,0 +1,17 @@
+docker run -p 10030:10030 --name platform \
+-v /etc/localtime:/etc/localtime \
+-d registry.cn-chengdu.aliyuncs.com/fandf/platform:1.0.0
+
+
+docker run -p 10026:10026 --name gateway \
+-v /etc/localtime:/etc/localtime \
+-d registry.cn-chengdu.aliyuncs.com/fandf/gateway:1.0.0
+
+docker run -p 10027:10027 --name uaa-service \
+-v /etc/localtime:/etc/localtime \
+-d registry.cn-chengdu.aliyuncs.com/fandf/uaa:1.0.0
+
+docker run -p 10025:10025 --name user-center \
+-v /etc/localtime:/etc/localtime \
+-d registry.cn-chengdu.aliyuncs.com/fandf/user-center:1.0.0
+

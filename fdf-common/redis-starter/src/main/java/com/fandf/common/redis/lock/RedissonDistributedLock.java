@@ -5,6 +5,7 @@ import com.fandf.common.exception.LockException;
 import com.fandf.common.lock.DistributedLock;
 import com.fandf.common.lock.ZLock;
 import org.redisson.api.RLock;
+import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -33,6 +34,16 @@ public class RedissonDistributedLock implements DistributedLock {
         return new ZLock(lock, this);
     }
 
+    /**
+     * 读写锁
+     * @param key
+     * @return
+     */
+    private ZLock getReadWriteLock(String key) {
+        RReadWriteLock lock = redisson.getReadWriteLock(CommonConstant.LOCK_KEY_PREFIX + ":" + key);
+        return new ZLock(lock, this);
+    }
+
     @Override
     public ZLock lock(String key, long leaseTime, TimeUnit unit, boolean isFair) throws Exception {
         ZLock zLock = getLock(key, isFair);
@@ -41,6 +52,17 @@ public class RedissonDistributedLock implements DistributedLock {
         return zLock;
     }
 
+    /**
+     *
+     * @param key 锁的key
+     * @param waitTime 获取锁的最大尝试时间(单位 {@code unit})
+     * @param leaseTime 加锁的时间，超过这个时间后锁便自动解锁；
+     *                  如果leaseTime为-1，则保持锁定直到显式解锁
+     * @param unit {@code waitTime} 和 {@code leaseTime} 参数的时间单位
+     * @param isFair 公平锁
+     * @return
+     * @throws Exception
+     */
     @Override
     public ZLock tryLock(String key, long waitTime, long leaseTime, TimeUnit unit, boolean isFair) throws Exception {
         ZLock zLock = getLock(key, isFair);

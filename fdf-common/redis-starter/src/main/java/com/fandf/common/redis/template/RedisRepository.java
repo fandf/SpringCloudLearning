@@ -367,7 +367,7 @@ public class RedisRepository {
      * @param value the value
      * @return the long
      */
-    public Long in(String key, Object value) {
+    public Long rightPush(String key, Object value) {
         return opsForList().rightPush(key, value);
     }
 

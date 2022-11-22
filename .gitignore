@@ -64,3 +64,8 @@ hs_err_pid*
 /fdf-monitor/log-center/log-center.iml
 /fdf-business/user-center/user-center.iml
 /fdf-web/user-platform/user-platform.iml
+/fdf-common/zookeeper-starter/zookeeper-starter.iml
+/fdf-common/mongodb-starter/mongodb-starter.iml
+/fdf-demo/rabbitmq/rabbitmq.iml
+/fdf-common/mongo-starter/mongo-starter.iml
+/fdf-demo/mongo/mongo.iml
