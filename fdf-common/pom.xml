@@ -23,6 +23,7 @@
         <module>elasticsearch-starter</module>
         <module>zookeeper-starter</module>
         <module>mongo-starter</module>
+        <module>oss-starter</module>
     </modules>
 
 

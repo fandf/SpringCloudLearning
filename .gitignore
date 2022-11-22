@@ -69,3 +69,5 @@ hs_err_pid*
 /fdf-demo/rabbitmq/rabbitmq.iml
 /fdf-common/mongo-starter/mongo-starter.iml
 /fdf-demo/mongo/mongo.iml
+/fdf-business/file-center/file-center.iml
+/fdf-common/oss-starter/oss-starter.iml

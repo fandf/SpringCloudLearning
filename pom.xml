@@ -124,6 +124,11 @@
                 <artifactId>search-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.fandf</groupId>
+                <artifactId>oss-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!--Spring Cloud Alibaba 版本管理器-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>

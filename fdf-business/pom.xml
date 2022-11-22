@@ -16,6 +16,7 @@
         <module>search-service</module>
         <module>search-client</module>
         <module>user-center</module>
+        <module>file-center</module>
     </modules>
 
     <dependencies>
