@@ -17,7 +17,6 @@
         <module>demo</module>
         <module>rabbitmq</module>
         <module>mongo</module>
-        <module>spring5</module>
     </modules>
 
 </project>

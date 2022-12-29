@@ -17,7 +17,7 @@ public class DemoApplication {
         new SpringApplicationBuilder()
                 .sources(DemoApplication.class)
                 .initializers((ApplicationContextInitializer<GenericApplicationContext>) ctx -> {
-                    System.out.println("在程序运行前向上下文注入Tese");
+                    System.out.println("在程序运行前向上下文注入Test");
                     ctx.registerBean("test", Test.class, Test::new);
                 })
                 .run(args);
