@@ -17,6 +17,7 @@
         <module>demo</module>
         <module>rabbitmq</module>
         <module>mongo</module>
+        <module>sso-demo</module>
     </modules>
 
 </project>
