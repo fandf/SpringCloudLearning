@@ -15,12 +15,15 @@ public class Test {
     private String email;
     @PrivacyEncrypt(type = PrivacyTypeEnum.PHONE)
     private String phone;
+    @PrivacyEncrypt(type = PrivacyTypeEnum.ID_CARD)
+    private String idCard;
 
     public static void main(String[] args) {
         Test test = new Test();
         test.setEmail("123@qq.com");
         test.setPhone("17845678945");
         test.setName("张有志");
+        test.setIdCard("123456");
         System.out.println(test);
     }
 

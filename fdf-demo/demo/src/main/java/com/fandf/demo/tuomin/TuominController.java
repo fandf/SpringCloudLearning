@@ -16,6 +16,7 @@ public class TuominController {
         test.setEmail("123@qq.com");
         test.setPhone("17845678945");
         test.setName("张有志");
+        test.setIdCard("610422199209121213");
         return test;
     }
 
