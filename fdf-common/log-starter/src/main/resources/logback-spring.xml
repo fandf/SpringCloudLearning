@@ -5,8 +5,8 @@
     <springProperty name="LOG_FILE" scope="context" source="logging.file" defaultValue="./logs/application/${APP_NAME}"/>
     <springProperty name="LOG_POINT_FILE" scope="context" source="logging.file" defaultValue="./logs/point"/>
     <springProperty name="LOG_AUDIT_FILE" scope="context" source="logging.file" defaultValue="./logs/audit"/>
-    <springProperty name="LOG_MAXFILESIZE" scope="context" source="logback.filesize" defaultValue="50MB"/>
-    <springProperty name="LOG_FILEMAXDAY" scope="context" source="logback.filemaxday" defaultValue="7"/>
+    <springProperty name="LOG_MAX_FILESIZE" scope="context" source="logback.filesize" defaultValue="50MB"/>
+    <springProperty name="LOG_FILE_MAX_DAY" scope="context" source="logback.filemaxday" defaultValue="7"/>
     <springProperty name="ServerIP" scope="context" source="spring.cloud.client.ip-address" defaultValue="0.0.0.0"/>
     <springProperty name="ServerPort" scope="context" source="server.port" defaultValue="0000"/>
     <!--LogStash访问host-->
@@ -42,9 +42,9 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_FILE}/${APP_NAME}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!--保留时间,单位:天-->
-            <maxHistory>${LOG_FILEMAXDAY}</maxHistory>
+            <maxHistory>${LOG_FILE_MAX_DAY}</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>${LOG_MAXFILESIZE}</maxFileSize>
+                <maxFileSize>${LOG_MAX_FILESIZE}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -62,9 +62,9 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_POINT_FILE}/point.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!--保留时间,单位:天-->
-            <maxHistory>${LOG_FILEMAXDAY}</maxHistory>
+            <maxHistory>${LOG_FILE_MAX_DAY}</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>${LOG_MAXFILESIZE}</maxFileSize>
+                <maxFileSize>${LOG_MAX_FILESIZE}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
@@ -79,9 +79,9 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_AUDIT_FILE}/audit.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!--保留时间,单位:天-->
-            <maxHistory>${LOG_FILEMAXDAY}</maxHistory>
+            <maxHistory>${LOG_FILE_MAX_DAY}</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>${LOG_MAXFILESIZE}</maxFileSize>
+                <maxFileSize>${LOG_MAX_FILESIZE}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
