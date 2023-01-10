@@ -1,32 +1,34 @@
 package com.fandf.demo.caffeine;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author fandongfeng
- * @date 2022-9-13 9:15
+ * @date 2023-1-10 10:47
  */
 @Slf4j
-public class CaffeineDemo {
+public class GuavaCacheDemo {
 
-    public static void main(String[] args) {
-        Cache<String, String> cache = Caffeine.newBuilder()
+    public static void main(String[] args) throws ExecutionException {
+        Cache<String, String> cache = CacheBuilder.newBuilder()
+                // 初始容量
                 .initialCapacity(5)
-                // 超出时淘汰
+                // 最大缓存数，超出淘汰
                 .maximumSize(10)
-                //设置写缓存后n秒钟过期
+                // 过期时间
                 .expireAfterWrite(60, TimeUnit.SECONDS)
-                //设置读写缓存后n秒钟过期,实际很少用到,类似于expireAfterWrite
-                //.expireAfterAccess(17, TimeUnit.SECONDS)
                 .build();
 
         String orderId = String.valueOf(123456789);
-        String orderInfo = cache.get(orderId, key -> getInfo(key));
-        System.out.println(orderInfo);
+        // 获取orderInfo，如果key不存在，callable中调用getInfo方法返回数据
+        String orderInfo = cache.get(orderId, () -> getInfo(orderId));
+        log.info("orderInfo = {}", orderInfo);
+
     }
 
     private static String getInfo(String orderId) {

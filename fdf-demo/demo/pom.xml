@@ -29,11 +29,12 @@
         <!--            <groupId>com.fandf</groupId>-->
         <!--            <artifactId>db-starter</artifactId>-->
         <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.github.ben-manes.caffeine</groupId>-->
-        <!--            <artifactId>caffeine</artifactId>-->
-        <!--            <version>3.0.0</version>-->
-        <!--        </dependency>-->
+                <dependency>
+                    <groupId>com.github.ben-manes.caffeine</groupId>
+                    <artifactId>caffeine</artifactId>
+<!--                    <version>3.0.0</version>   3.x版本不支持jdk1.8 -->
+                    <version>2.9.3</version>
+                </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
