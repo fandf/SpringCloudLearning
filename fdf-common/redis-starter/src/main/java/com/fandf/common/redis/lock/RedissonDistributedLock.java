@@ -45,7 +45,7 @@ public class RedissonDistributedLock implements DistributedLock {
     }
 
     @Override
-    public ZLock lock(String key, long leaseTime, TimeUnit unit, boolean isFair) throws Exception {
+    public ZLock lock(String key, long leaseTime, TimeUnit unit, boolean isFair) {
         ZLock zLock = getLock(key, isFair);
         RLock lock = (RLock)zLock.getLock();
         lock.lock(leaseTime, unit);
@@ -74,7 +74,7 @@ public class RedissonDistributedLock implements DistributedLock {
     }
 
     @Override
-    public void unlock(Object lock) throws Exception {
+    public void unlock(Object lock) {
         if (lock != null) {
             if (lock instanceof RLock) {
                 RLock rLock = (RLock)lock;

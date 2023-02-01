@@ -14,10 +14,10 @@ import java.lang.annotation.Target;
  * @author fandongfeng
  * @date 2023-1-4 10:11
  */
-@Target(ElementType.FIELD) // 作用在字段上
-@Retention(RetentionPolicy.RUNTIME) // class文件中保留，运行时也保留，能通过反射读取到
-@JacksonAnnotationsInside // 表示自定义自己的注解PrivacyEncrypt
-@JsonSerialize(using = PrivacySerializer.class) // 该注解使用序列化的方式
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+@JacksonAnnotationsInside
+@JsonSerialize(using = PrivacySerializer.class)
 public @interface PrivacyEncrypt {
 
     /**
