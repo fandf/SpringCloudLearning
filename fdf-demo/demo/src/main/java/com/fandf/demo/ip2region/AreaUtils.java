@@ -5,6 +5,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.csv.CsvRow;
 import cn.hutool.core.text.csv.CsvUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.*;
 
@@ -113,6 +114,11 @@ public class AreaUtils {
     @SafeVarargs
     private static <T> boolean equalsAny(T obj, T... array) {
         return Arrays.asList(array).contains(obj);
+    }
+
+    public static void main(String[] args) {
+        Area area = AreaUtils.getArea(1);
+        System.out.println(area);
     }
 
 }
