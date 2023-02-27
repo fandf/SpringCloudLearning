@@ -17,7 +17,8 @@ spring:
 #      password: 123456
 #      authentication-database: admin
 #      auto-index-creation: false
-
+test:
+  person: "1,张三,15"
 
 
 
