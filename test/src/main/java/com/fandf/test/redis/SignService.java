@@ -2,18 +2,13 @@ package com.fandf.test.redis;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
-import com.fandf.common.model.Result;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.BitFieldSubCommands;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -30,21 +25,6 @@ public class SignService {
 
     /**
      * 当日签到接口
-     * <p>
-     * #向指定位置（offset）存入0或1
-     * SETBIT key offset value
-     * <p>
-     * #获取指定位置（offset）的bit值
-     * GETBIT key offset
-     * <p>
-     * #统计bitmap中(从start到end，如果不写起始位置，就统计整个key)值为1的bit数量
-     * BITCOUNT key [start end]
-     * <p>
-     * #操作（查询，修改，自增）Bitmap中指定的位置（offset）的值
-     * BITFIELD key [GET type offset] [SET type offset value] [INCRBY type offset increment] [OVERFLOW WRAP|SAT|FAIL]
-     * <p>
-     * #获取Bitmap中的bit数组，并以十进制返回
-     * BITFIELD_RO
      */
     public Boolean sign() {
         // 1.获取当前登录用户
@@ -62,7 +42,7 @@ public class SignService {
     }
 
     /**
-     * 指定日期签到
+     * 指定日期签到, 补签
      */
     public Boolean signDate(String date) {
         // 1.获取当前登录用户
