@@ -374,6 +374,7 @@
         <module>fdf-monitor</module>
         <module>fdf-uaa</module>
         <module>fdf-web</module>
+        <module>fdf-test</module>
         <module>test</module>
     </modules>
 
