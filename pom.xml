@@ -31,7 +31,7 @@
         <!-- 高版本启动报错 Property 'sqlSessionFactory' or 'sqlSessionTemplate' are required -->
         <sharding-sphere.version>4.0.0-RC1</sharding-sphere.version>
         <knife4j.version>2.0.4</knife4j.version>
-        <redisson-starter.version>3.17.4</redisson-starter.version>
+        <redisson-starter.version>3.20.0</redisson-starter.version>
         <commons-io.version>2.11.0</commons-io.version>
         <spring-cloud-starter-oauth2.version>2.2.5.RELEASE</spring-cloud-starter-oauth2.version>
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>

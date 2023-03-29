@@ -48,6 +48,7 @@ public class RedissonDistributedLock implements DistributedLock {
     public ZLock lock(String key, long leaseTime, TimeUnit unit, boolean isFair) {
         ZLock zLock = getLock(key, isFair);
         RLock lock = (RLock)zLock.getLock();
+        lock.lock();
         lock.lock(leaseTime, unit);
         return zLock;
     }
