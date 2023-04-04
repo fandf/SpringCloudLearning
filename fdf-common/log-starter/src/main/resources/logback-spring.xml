@@ -98,13 +98,16 @@
                 <pattern>
                     <pattern>
                         {
-                        "project": "spring-cloud-learning",
-                        "level": "%level",
-                        "service": "${APP_NAME:-}",
+                        "service": "${APP_NAME}",
+                        "env":"${Environment}",
+                        "ip": "${ServerIP}:${ServerPort}",
                         "class": "%logger",
+                        "level": "%level",
                         "traceId": "%X{traceId}",
+                        "thread": "%thread",
                         "spanId": "%X{spanId}",
-                        "message": "%message"
+                        "message": "%message",
+                        "exception":"%exception"
                         }
                     </pattern>
                 </pattern>
