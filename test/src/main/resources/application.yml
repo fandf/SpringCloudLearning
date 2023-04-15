@@ -6,3 +6,9 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    virtual-host: /
+    username: admin
+    password: admin
