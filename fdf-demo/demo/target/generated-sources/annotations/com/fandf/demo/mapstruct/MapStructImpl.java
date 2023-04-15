@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-26T11:49:26+0800",
+    date = "2023-04-09T22:06:35+0800",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 1.8.0_141 (Oracle Corporation)"
 )
 public class MapStructImpl implements MapStruct {
