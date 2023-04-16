@@ -12,7 +12,30 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String EXCHANGE_NAME = "ikun_exchange";
-    public static final String QUEUE_NAME = "ikun_queue";
+    public static final String QUEUE_NAME_A = "ikun_queue_a";
+    public static final String QUEUE_NAME_B = "ikun_queue_b";
+
+    /**
+     * 死信交换机
+     */
+    public static final String DEAD_LETTER_EXCHANGE = ".dead.letter.exchange";
+    /**
+     * 死信队列A routingKey
+     */
+    public static final String DEAD_LETTER_QUEUEA_ROUTING_KEY = "dead.letter.queuea.routingkey";
+    /**
+     * 死信队列B routingKey
+     */
+    public static final String DEAD_LETTER_QUEUEB_ROUTING_KEY = "dead.letter.queueb.routingkey";
+    /**
+     * 死信队列A
+     */
+    public static final String DEAD_LETTER_QUEUEA_NAME = "dead.letter.queuea";
+    /**
+     * 死信队列B
+     */
+    public static final String DEAD_LETTER_QUEUEB_NAME = "dead.letter.queueb";
+
 
     /**
      * 交换机
@@ -26,9 +49,9 @@ public class RabbitMQConfig {
      * 队列
      */
     @Bean
-    public Queue ikunQueue() {
+    public Queue ikunQueuea() {
         //return new Queue(QUEUE_NAME, true, false, false, null);
-        return QueueBuilder.durable(QUEUE_NAME).build();
+        return QueueBuilder.durable(QUEUE_NAME_A).build();
     }
 
     /**
