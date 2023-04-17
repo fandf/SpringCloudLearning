@@ -1,4 +1,4 @@
-package com.fandf.test.redis;
+package com.fandf.test;
 
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RLock;

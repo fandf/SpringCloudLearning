@@ -1,8 +1,12 @@
 package com.fandf.test.rabbit;
 
 import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author fandongfeng
@@ -11,56 +15,92 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String EXCHANGE_NAME = "ikun_exchange";
-    public static final String QUEUE_NAME_A = "ikun_queue_a";
-    public static final String QUEUE_NAME_B = "ikun_queue_b";
+    /**
+     * 订单交换机
+     */
+    public static final String ORDER_EXCHANGE = "order_exchange";
+    /**
+     * 订单队列
+     */
+    public static final String ORDER_QUEUE = "order_queue";
+    /**
+     * 订单路由key
+     */
+    public static final String ORDER_QUEUE_ROUTING_KEY = "order.#";
 
     /**
      * 死信交换机
      */
-    public static final String DEAD_LETTER_EXCHANGE = ".dead.letter.exchange";
+    public static final String ORDER_DEAD_LETTER_EXCHANGE = "order_dead_letter_exchange";
     /**
-     * 死信队列A routingKey
+     * 死信队列 routingKey
      */
-    public static final String DEAD_LETTER_QUEUEA_ROUTING_KEY = "dead.letter.queuea.routingkey";
+    public static final String ORDER_DEAD_LETTER_QUEUE_ROUTING_KEY = "order_dead_letter_queue_routing_key";
+
     /**
-     * 死信队列B routingKey
+     * 死信队列
      */
-    public static final String DEAD_LETTER_QUEUEB_ROUTING_KEY = "dead.letter.queueb.routingkey";
-    /**
-     * 死信队列A
-     */
-    public static final String DEAD_LETTER_QUEUEA_NAME = "dead.letter.queuea";
-    /**
-     * 死信队列B
-     */
-    public static final String DEAD_LETTER_QUEUEB_NAME = "dead.letter.queueb";
+    public static final String ORDER_DEAD_LETTER_QUEUE = "order_dead_letter_queue";
 
 
     /**
-     * 交换机
+     * 创建死信交换机
      */
-    @Bean
-    public Exchange ikunExchange() {
-        //return new TopicExchange(EXCHANGE_NAME, true, false);
-        return ExchangeBuilder.topicExchange(EXCHANGE_NAME).durable(true).build();
-    }
-    /**
-     * 队列
-     */
-    @Bean
-    public Queue ikunQueuea() {
-        //return new Queue(QUEUE_NAME, true, false, false, null);
-        return QueueBuilder.durable(QUEUE_NAME_A).build();
+    @Bean("orderDeadLetterExchange")
+    public Exchange orderDeadLetterExchange() {
+        return new TopicExchange(ORDER_DEAD_LETTER_EXCHANGE, true, false);
     }
 
     /**
-     * 交换机和队列绑定关系
+     * 创建死信队列
      */
-    @Bean
-    public Binding ikunBinding(Queue queue, Exchange exchange) {
-        //return new Binding(QUEUE_NAME, Binding.DestinationType.QUEUE, EXCHANGE_NAME, "ikun.#", null);
-        return BindingBuilder.bind(queue).to(exchange).with("ikun.#").noargs();
+    @Bean("orderDeadLetterQueue")
+    public Queue orderDeadLetterQueue() {
+        return QueueBuilder.durable(ORDER_DEAD_LETTER_QUEUE).build();
     }
+
+    /**
+     * 绑定死信交换机和死信队列
+     */
+    @Bean("orderDeadLetterBinding")
+    public Binding orderDeadLetterBinding(@Qualifier("orderDeadLetterQueue") Queue queue, @Qualifier("orderDeadLetterExchange")Exchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(ORDER_DEAD_LETTER_QUEUE_ROUTING_KEY).noargs();
+    }
+
+
+    /**
+     * 创建订单交换机
+     */
+    @Bean("orderExchange")
+    public Exchange orderExchange() {
+        return new TopicExchange(ORDER_EXCHANGE, true, false);
+    }
+
+    /**
+     * 创建订单队列
+     */
+    @Bean("orderQueue")
+    public Queue orderQueue() {
+        Map<String, Object> args = new HashMap<>(3);
+        //消息过期后，进入到死信交换机
+        args.put("x-dead-letter-exchange", ORDER_DEAD_LETTER_EXCHANGE);
+
+        //消息过期后，进入到死信交换机的路由key
+        args.put("x-dead-letter-routing-key", ORDER_DEAD_LETTER_QUEUE_ROUTING_KEY);
+
+        //过期时间，单位毫秒
+        args.put("x-message-ttl", 10000);
+
+        return QueueBuilder.durable(ORDER_QUEUE).withArguments(args).build();
+    }
+
+    /**
+     * 绑定订单交换机和队列
+     */
+    @Bean("orderBinding")
+    public Binding orderBinding(@Qualifier("orderQueue") Queue queue, @Qualifier("orderExchange")Exchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(ORDER_QUEUE_ROUTING_KEY).noargs();
+    }
+
 
 }

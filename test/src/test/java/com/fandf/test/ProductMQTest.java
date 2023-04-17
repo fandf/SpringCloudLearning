@@ -1,10 +1,12 @@
-package com.fandf.test.redis;
+package com.fandf.test;
 
+import cn.hutool.core.date.DateUtil;
 import com.fandf.test.rabbit.RabbitMQConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
+import com.fandf.test.rabbit.OrderMQListener;
 
 import javax.annotation.Resource;
 
@@ -20,8 +22,8 @@ public class ProductMQTest {
 
     @Test
     public void test() throws InterruptedException {
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME,"ikun.mei", "鸡你太美");
-        Thread.sleep(10000);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.ORDER_EXCHANGE, "order", "订单消息");
+        Thread.sleep(20000);
     }
 
     @Test
@@ -36,12 +38,12 @@ public class ProductMQTest {
             @Override
             public void confirm(CorrelationData correlationData, boolean ack, String cause) {
                 System.out.println("confirm=====>");
-                System.out.println("confirm==== ack="+ack);
-                System.out.println("confirm==== cause="+cause);
+                System.out.println("confirm==== ack=" + ack);
+                System.out.println("confirm==== cause=" + cause);
                 //根据ACK状态做对应的消息更新操作 TODO
             }
         });
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME,"ikun.mei", "鸡你太美");
+        rabbitTemplate.convertAndSend(RabbitMQConfig.ORDER_EXCHANGE, "ikun.mei", "鸡你太美");
         Thread.sleep(10000);
     }
 
@@ -53,10 +55,25 @@ public class ProductMQTest {
         //开启强制消息投递（mandatory为设置为true），但消息未被路由至任何一个queue，则回退一条消息
         rabbitTemplate.setReturnsCallback(returned -> {
             int code = returned.getReplyCode();
-            System.out.println("code="+code);
-            System.out.println("returned="+ returned);
+            System.out.println("code=" + code);
+            System.out.println("returned=" + returned);
         });
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME,"123456","测试returnCallback");
+        rabbitTemplate.convertAndSend(RabbitMQConfig.ORDER_EXCHANGE, "123456", "测试returnCallback");
+    }
+
+    @Test
+    void testOrder() throws InterruptedException {
+        //为true,则交换机处理消息到路由失败，则会返回给生产者  配置文件指定，则这里不需指定
+        rabbitTemplate.setMandatory(true);
+        //开启强制消息投递（mandatory为设置为true），但消息未被路由至任何一个queue，则回退一条消息
+        rabbitTemplate.setReturnsCallback(returned -> {
+            int code = returned.getReplyCode();
+            System.out.println("code=" + code);
+            System.out.println("returned=" + returned);
+        });
+        rabbitTemplate.convertAndSend(RabbitMQConfig.ORDER_EXCHANGE, "order", "测试订单延迟");
+        System.out.println("发送消息：" + DateUtil.now());
+        Thread.sleep(20000);
     }
 
 }
