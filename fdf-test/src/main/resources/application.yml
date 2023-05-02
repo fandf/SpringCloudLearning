@@ -1,2 +1,8 @@
+spring:
+  application:
+    name: fdf-test
 server:
   port: 9002
+fdf:
+  trace:
+    enable: true

@@ -1,32 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false" scan="true" scanPeriod="1 seconds">
+<configuration>
+    <contextName>${APP_NAME}</contextName>
+    <springProperty name="APP_NAME" scope="context" source="spring.application.name"/>
+    <springProperty name="LOG_FILE" scope="context" source="logging.file" defaultValue="./logs/application/${APP_NAME}"/>
+    <springProperty name="LOG_POINT_FILE" scope="context" source="logging.file" defaultValue="./logs/point"/>
+    <springProperty name="LOG_AUDIT_FILE" scope="context" source="logging.file" defaultValue="./logs/audit"/>
+    <springProperty name="LOG_MAX_FILESIZE" scope="context" source="logback.filesize" defaultValue="50MB"/>
+    <springProperty name="LOG_FILE_MAX_DAY" scope="context" source="logback.filemaxday" defaultValue="7"/>
+    <springProperty name="ServerIP" scope="context" source="spring.cloud.client.ip-address" defaultValue="0.0.0.0"/>
+    <springProperty name="ServerPort" scope="context" source="server.port" defaultValue="0000"/>
+    <!--LogStash访问host-->
+    <springProperty name="LOG_STASH_HOST" scope="context" source="logstash.host" defaultValue="localhost"/>
 
-    <contextName>logback</contextName>
-    <property name="log.path" value="./logs/xxl-job/xxl-job-admin.log"/>
+    <!-- 彩色日志 -->
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
 
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.mdc.TraceIdMDCPatternLogbackLayout">
-                <Pattern>${logEnv} %d{yyyy-MM-dd HH:mm:ss.SSS} [%X{tid}] [%thread] %-5level %logger{36} -%msg%n
-                </Pattern>
-            </layout>
-        </encoder>
-    </appender>
+    <!-- 彩色日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="[${APP_NAME}:${ServerIP}:${ServerPort}] %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%level){blue} %clr(${PID}){magenta} %clr([%X{traceId}-%X{spanId}]){yellow} %clr([%thread]){orange} %clr(%-40.40logger{39}){cyan} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}" />
+    <property name="CONSOLE_LOG_PATTERN_NO_COLOR" value="[${APP_NAME}:${ServerIP}:${ServerPort}] %d{yyyy-MM-dd HH:mm:ss.SSS} %level ${PID} [%X{traceId}-%X{spanId}] [%thread] %-40.40logger{39} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}" />
 
-    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
-        </rollingPolicy>
+    <!-- 控制台日志 -->
+    <appender name="StdoutAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
         <encoder>
-            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
-            </pattern>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
+    <!-- 按照每天生成常规日志文件 -->
+    <appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}/${APP_NAME}.log</file>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN_NO_COLOR}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 基于时间的分包策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}/${APP_NAME}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--保留时间,单位:天-->
+            <maxHistory>${LOG_FILE_MAX_DAY}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${LOG_MAX_FILESIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
 
-    <root level="info">
-        <appender-ref ref="console"/>
-        <appender-ref ref="file"/>
+    <appender name="point_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_POINT_FILE}/point.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|${APP_NAME}|%msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 基于时间的分包策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_POINT_FILE}/point.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--保留时间,单位:天-->
+            <maxHistory>${LOG_FILE_MAX_DAY}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${LOG_MAX_FILESIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="audit_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_AUDIT_FILE}/audit.log</file>
+        <encoder>
+            <pattern>%msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 基于时间的分包策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_AUDIT_FILE}/audit.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--保留时间,单位:天-->
+            <maxHistory>${LOG_FILE_MAX_DAY}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${LOG_MAX_FILESIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!--接口访问记录日志输出到LogStash-->
+    <appender name="LOG_STASH_RECORD" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${LOG_STASH_HOST}:4560</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>Asia/Shanghai</timeZone>
+                </timestamp>
+                <!--自定义日志输出格式-->
+                <pattern>
+                    <pattern>
+                        {
+                        "service": "${APP_NAME}",
+                        "env":"${Environment}",
+                        "ip": "${ServerIP}:${ServerPort}",
+                        "class": "%logger",
+                        "level": "%level",
+                        "traceId": "%X{traceId}",
+                        "thread": "%thread",
+                        "spanId": "%X{spanId}",
+                        "message": "%message",
+                        "exception":"%exception"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        <!--当有多个LogStash服务时，设置访问策略为轮询-->
+        <connectionStrategy>
+            <roundRobin>
+                <connectionTTL>5 minutes</connectionTTL>
+            </roundRobin>
+        </connectionStrategy>
+    </appender>
+
+
+    <appender name="point_log_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="point_log"/>
+    </appender>
+    <appender name="file_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="FileAppender"/>
+    </appender>
+    <appender name="audit_log_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="audit_log"/>
+    </appender>
+    <logger name="com.fandf.log.monitor" level="debug" addtivity="false">
+        <appender-ref ref="point_log_async" />
+    </logger>
+    <logger name="com.fandf.log.service.impl.LoggerAuditServiceImpl" level="info" addtivity="false">
+        <appender-ref ref="audit_log_async" />
+    </logger>
+    <logger name="com.fandf.log.aspect.WebLogAspect" level="DEBUG">
+        <appender-ref ref="LOG_STASH_RECORD"/>
+    </logger>
+
+
+
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.apache.commons" level="ERROR"/>
+    <logger name="springfox.documentation" level="ERROR"/>
+    <logger name="com.ulisesbocchio" level="ERROR"/>
+    <logger name="com.alibaba.nacos" level="WARN"/>
+    <logger name="org.apache.ibatis" level="WARN"/>
+    <logger name="org.mybatis" level="WARN"/>
+    <logger name="org.quartz" level="ERROR"/>
+    <logger name="org.redisson" level="ERROR"/>
+    <logger name="io.netty" level="ERROR"/>
+    <logger name="com.baomidou.mybatisplus" level="ERROR"/>
+    <!--myibatis log configure-->
+    <logger name="com.apache.ibatis" level="TRACE"/>
+    <logger name="com.zaxxer.hikari" level="ERROR"/>
+    <logger name="com.alibaba.nacos" level="ERROR"/>
+    <logger name="java.sql.Connection" level="DEBUG"/>
+    <logger name="java.sql.Statement" level="DEBUG"/>
+    <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+
+
+    <root level="INFO">
+        <appender-ref ref="StdoutAppender"/>
+        <appender-ref ref="file_async"/>
     </root>
-
 </configuration>

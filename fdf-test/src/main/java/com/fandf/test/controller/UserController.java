@@ -23,7 +23,7 @@ public class UserController {
     @GetMapping("name")
     public String getName() {
         log.info("收到请求信息 {}", System.currentTimeMillis());
-        return "zhangsan";
+        return "好好写技术";
     }
 
     @GetMapping

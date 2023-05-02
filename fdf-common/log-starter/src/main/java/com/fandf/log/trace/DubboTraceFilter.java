@@ -6,6 +6,7 @@ import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 
 /**
+` * Dubbo拦截器，传递traceId
  * @author fandongfeng
  * @date 2022/6/26 20:59
  */
