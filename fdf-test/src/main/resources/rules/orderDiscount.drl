@@ -1,0 +1,63 @@
+// 订单优惠规则 须与kmodule.xml的package一致
+package com.fandf.rules
+import com.fandf.test.entity.Order
+import java.math.BigDecimal
+
+// 规则一：100-200 优惠 10
+rule "order_discount_1"
+    when
+        $order: Order(originalPrice >= 100 && originalPrice < 200) // 匹配模式，到规则引擎中（工作内存）查找Order对象，命名为$order
+    then
+        $order.setRealPrice($order.getOriginalPrice().subtract(BigDecimal.valueOf(10)));
+        System.out.println("成功匹配到规则一，订单金额优惠10元");
+end
+
+// 规则二：200-500 优惠 20
+rule "order_discount_2"
+    when
+        $order: Order(originalPrice >= 200 && originalPrice < 500)
+    then
+        $order.setRealPrice($order.getOriginalPrice().subtract(BigDecimal.valueOf(20)));
+        System.out.println("成功匹配到规则二，订单金额优惠20元");
+end
+
+// 规则三：500-1000 优惠 50
+rule "order_discount_3"
+    when
+        $order: Order(originalPrice >= 500 && originalPrice < 1000)
+    then
+        $order.setRealPrice($order.getOriginalPrice().subtract(BigDecimal.valueOf(50)));
+        System.out.println("成功匹配到规则三，订单金额优惠50元");
+end
+// 规则四：1000-2000 优惠 100
+rule "order_discount_4"
+    when
+        $order: Order(originalPrice >= 1000 && originalPrice < 2000)
+    then
+        $order.setRealPrice($order.getOriginalPrice().subtract(BigDecimal.valueOf(100)));
+        System.out.println("成功匹配到规则四，订单金额优惠100元");
+end
+// 规则五：2000-5000 优惠 300
+rule "order_discount_5"
+    when
+        $order: Order(originalPrice >= 2000 && originalPrice < 5000)
+    then
+        $order.setRealPrice($order.getOriginalPrice().subtract(BigDecimal.valueOf(300)));
+        System.out.println("成功匹配到规则五，订单金额优惠300元");
+end
+// 规则六：5000-10000 优惠 500
+rule "order_discount_6"
+    when
+        $order: Order(originalPrice >= 5000 && originalPrice < 10000)
+    then
+        $order.setRealPrice($order.getOriginalPrice().subtract(BigDecimal.valueOf(500)));
+        System.out.println("成功匹配到规则六，订单金额优惠500元");
+end
+// 规则七：10000以上 优惠 1000
+rule "order_discount_7"
+    when
+        $order: Order(originalPrice >= 10000)
+    then
+        $order.setRealPrice($order.getOriginalPrice().subtract(BigDecimal.valueOf(1000)));
+        System.out.println("成功匹配到规则七，订单金额优惠1000元");
+end

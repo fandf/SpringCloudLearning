@@ -25,6 +25,23 @@
             <groupId>com.fandf</groupId>
             <artifactId>log-starter</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.drools/drools-compiler -->
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-compiler</artifactId>
+            <version>7.73.0.Final</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.drools/drools-mvel -->
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-mvel</artifactId>
+            <version>7.73.0.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
     </dependencies>
 
 
