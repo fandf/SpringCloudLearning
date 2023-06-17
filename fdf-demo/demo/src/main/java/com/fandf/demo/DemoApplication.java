@@ -1,17 +1,14 @@
 package com.fandf.demo;
 
-import com.fandf.demo.design.抽象工厂.Test;
 import com.fandf.demo.propertyeditor.Person;
 import com.fandf.demo.propertyeditor.StringToPersonConverter;
 import com.fandf.demo.propertyeditor.StringToPersonPropertyEditor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.config.CustomEditorConfigurer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ConversionServiceFactoryBean;
-import org.springframework.context.support.GenericApplicationContext;
 
 import java.beans.PropertyEditor;
 import java.util.Collections;
@@ -23,6 +20,7 @@ import java.util.Map;
  * @date 2022/7/7 11:09
  */
 @SpringBootApplication
+@MapperScan({"com.fandf.demo"})
 public class DemoApplication {
 
     @Bean
