@@ -197,11 +197,11 @@ public class GenUtils {
         }
 
         if (template.contains(FILE_NAME_MAPPER)) {
-            return packagePath + "mapper" + File.separator + className + "Mapper.java";
+            return packagePath + "mapper" + File.separator + className + "Dao.java";
         }
 
         if (template.contains(FILE_NAME_SERVICE)) {
-            return packagePath + "service" + File.separator + "I" + className + "Service.java";
+            return packagePath + "service" + File.separator + className + "Service.java";
         }
 
         if (template.contains(FILE_NAME_SERVICEIMPL)) {

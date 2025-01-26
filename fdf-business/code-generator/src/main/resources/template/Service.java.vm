@@ -1,8 +1,7 @@
 package ${package}.${moduleName}.service;
 
 import ${package}.${moduleName}.model.${className};
-import com.central.common.model.PageResult;
-import ${package}.common.service.ISuperService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Map;
 
@@ -12,12 +11,6 @@ import java.util.Map;
  * @author ${author}
  * @date ${datetime}
  */
-public interface I${className}Service extends ISuperService<${className}> {
-    /**
-     * 列表
-     * @param params
-     * @return
-     */
-    PageResult<${className}> findList(Map<String, Object> params);
+public interface ${className}Service extends IService<${className}> {
 }
 

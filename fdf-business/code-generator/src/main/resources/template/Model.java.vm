@@ -1,6 +1,6 @@
 package ${package}.${moduleName}.model;
 
-import ${package}.common.model.SuperEntity;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,12 +20,10 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @TableName("${tableName}")
-public class ${className} extends SuperEntity {
+public class ${className} extends Model<${className}> {
     private static final long serialVersionUID=1L;
 
 #foreach ($column in $columns)
-    #if($column.columnName != $pk.columnName && $column.columnName != "createTime" && $column.columnName != "updateTime")
-private $column.attrType $column.attrname;
-    #end
+    private $column.attrType $column.attrname;
 #end
 }
